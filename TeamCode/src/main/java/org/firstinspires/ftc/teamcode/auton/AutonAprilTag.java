@@ -171,7 +171,7 @@ public class AutonAprilTag extends LinearOpMode
             telemetry.addLine("One Dot");
             telemetry.update();
 
-            sleep(5000);
+            sleep(1000);
 
         }
         else if (tagOfInterest.id == MIDDLE) {
@@ -179,14 +179,14 @@ public class AutonAprilTag extends LinearOpMode
             telemetry.addLine("Two Dots");
             telemetry.update();
 
-            sleep(5000);
+            sleep(1000);
         }
         else {
             // pathing for three dots
             telemetry.addLine("Three Dots");
             telemetry.update();
 
-            sleep(5000);
+            sleep(1000);
         }
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending
