@@ -32,6 +32,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
+// do you see?
 @Autonomous(name = "AutonAprilTag", group = "Vision")
 public class AutonAprilTag extends LinearOpMode
 {
