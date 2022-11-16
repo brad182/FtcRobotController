@@ -203,7 +203,7 @@ public class LeftCenterHigh extends LinearOpMode
       telemetry.update();
     }
 
-    while(opModeIsActive()) {
+    if(opModeIsActive()) {
       frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
       backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
       backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -215,10 +215,10 @@ public class LeftCenterHigh extends LinearOpMode
       lift(450);
       sleep(300);
       Forward(35);
-      Right(43);
+      Right(46);
       lift(HI);
       sleep(300);
-      Forward(6);
+      Forward(4);
       sleep(300);
       clawMotor.setPosition(0);
       sleep(100);
@@ -234,19 +234,22 @@ public class LeftCenterHigh extends LinearOpMode
         telemetry.update();
 
         sleep(1000);
-
-      } else if (tagOfInterest.id == MIDDLE) {
+        Left(84);
+      }
+      else if (tagOfInterest.id == MIDDLE) {
         // pathing for two dots
         telemetry.addLine("Two Dots");
         telemetry.update();
 
         sleep(1000);
+        Left(60);
       } else {
         // pathing for three dots
         telemetry.addLine("Three Dots");
         telemetry.update();
 
         sleep(1000);
+        Left(36);
       }
     }
 
