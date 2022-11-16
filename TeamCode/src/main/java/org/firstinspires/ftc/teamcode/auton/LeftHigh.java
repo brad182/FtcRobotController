@@ -79,14 +79,14 @@ public class LeftHigh extends LinearOpMode {
       sleep(1000);
       lift(450);
       sleep(1500);
-      Forward(20);
+      Forward(26);
       sleep(600);
       //vision
       Forward(40);
       sleep(1200);
-      Right(19);
+      Right(10);
       lift(HI);
-      Forward(6);
+      Forward(4);
       sleep(3000);
       clawMotor.setPosition(1);
       lift(GR);
