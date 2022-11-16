@@ -19,7 +19,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "LeftCenterHigh", group = "Vision")
+@Autonomous(name = "Left Center High", group = "Vision")
 public class LeftCenterHigh extends LinearOpMode
 {
   private BNO055IMU imu;
