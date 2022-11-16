@@ -234,7 +234,7 @@ public class RightCenterHigh extends LinearOpMode
         telemetry.update();
 
         sleep(1000);
-        Left(84);
+        Right(72);
       }
       else if (tagOfInterest.id == MIDDLE) {
         // pathing for two dots
@@ -242,14 +242,14 @@ public class RightCenterHigh extends LinearOpMode
         telemetry.update();
 
         sleep(1000);
-        Left(60);
+        Right(45);
       } else {
         // pathing for three dots
         telemetry.addLine("Three Dots");
         telemetry.update();
 
         sleep(1000);
-        Left(36);
+        Right(20);
       }
     }
 

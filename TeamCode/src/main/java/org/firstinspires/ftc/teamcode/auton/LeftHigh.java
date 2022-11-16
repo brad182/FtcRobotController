@@ -214,10 +214,7 @@ public class LeftHigh extends LinearOpMode
       sleep(1000);
       lift(450);
       sleep(1500);
-      Forward(48);
-      sleep(600);
-      //vision
-      Forward(40);
+      Forward(88);
       sleep(1200);
       Right(14);
       lift(HI);
