@@ -211,22 +211,23 @@ public class LeftCenterHigh extends LinearOpMode
 //      clawMotor.setMode(Servo.RunMode.STOP_AND_RESET_ENCODER);
 
       clawMotor.setPosition(0);
-      sleep(300);
+      sleep(1000);
       lift(450);
-      sleep(300);
+      sleep(600);
       Forward(35);
-      Right(46);
+      Right(47);
       lift(HI);
-      sleep(300);
-      Forward(4);
-      sleep(300);
-      clawMotor.setPosition(0);
-      sleep(100);
-      lift(GR);
-      sleep(300);
+      sleep(600);
+      Forward(3);
+      sleep(600);
       clawMotor.setPosition(1);
-      sleep(300);
-      Backward(2);
+      sleep(600);
+      Backward(3);
+      sleep(600);
+      clawMotor.setPosition(0);
+      sleep(600);
+      lift(GR);
+
 
       if (tagOfInterest == null || tagOfInterest.id == LEFT) {
         // pathing for one dot
@@ -234,7 +235,7 @@ public class LeftCenterHigh extends LinearOpMode
         telemetry.update();
 
         sleep(1000);
-        Left(84);
+        Left(72);  // 72
       }
       else if (tagOfInterest.id == MIDDLE) {
         // pathing for two dots
@@ -242,14 +243,14 @@ public class LeftCenterHigh extends LinearOpMode
         telemetry.update();
 
         sleep(1000);
-        Left(60);
+        Left(45);
       } else {
         // pathing for three dots
         telemetry.addLine("Three Dots");
         telemetry.update();
 
         sleep(1000);
-        Left(36);
+        Left(18);
       }
     }
 
