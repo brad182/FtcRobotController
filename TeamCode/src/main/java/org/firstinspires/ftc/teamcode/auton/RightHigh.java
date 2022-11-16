@@ -214,16 +214,22 @@ public class RightHigh extends LinearOpMode
       sleep(1000);
       lift(450);
       sleep(1500);
-      Forward(35);
-      sleep(900);
-      Right(43);
+      Forward(77);
+      sleep(1200);
+      Backward(2);
+      Left(11);
+      sleep(500);
       lift(HI);
+      sleep(500);
       Forward(6);
       sleep(3000);
       clawMotor.setPosition(1);
+      sleep(800);
+      Backward(5);
+      sleep(500);
       lift(GR);
-      lift(250);
-      Backward(2);
+      sleep(1000);
+
 
       if (tagOfInterest == null || tagOfInterest.id == LEFT) {
         // pathing for one dot
@@ -231,7 +237,7 @@ public class RightHigh extends LinearOpMode
         telemetry.update();
 
         sleep(1000);
-        Left(84);
+        Left(15);
       }
       else if (tagOfInterest.id == MIDDLE) {
         // pathing for two dots
@@ -239,14 +245,14 @@ public class RightHigh extends LinearOpMode
         telemetry.update();
 
         sleep(1000);
-        Left(60);
+        Right(15);
       } else {
         // pathing for three dots
         telemetry.addLine("Three Dots");
         telemetry.update();
 
         sleep(1000);
-        Left(36);
+        Right(43);
       }
     }
 
