@@ -211,22 +211,23 @@ public class RightCenterHigh extends LinearOpMode
 //      clawMotor.setMode(Servo.RunMode.STOP_AND_RESET_ENCODER);
 
       clawMotor.setPosition(0);
-      sleep(300);
+      sleep(900);
       lift(450);
-      sleep(300);
-      Forward(35);
+      sleep(900);
+      Forward(36);
       Left(38);
       lift(HI);
-      sleep(300);
-      Forward(6);
-      sleep(300);
-      clawMotor.setPosition(0);
-      sleep(100);
-      lift(GR);
-      sleep(300);
+      sleep(900);
+      Forward(5);
+      sleep(900);
       clawMotor.setPosition(1);
       sleep(300);
       Backward(2);
+      lift(GR);
+      sleep(900);
+      clawMotor.setPosition(1);
+      sleep(900);
+
 
       if (tagOfInterest == null || tagOfInterest.id == LEFT) {
         // pathing for one dot
