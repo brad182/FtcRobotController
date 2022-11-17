@@ -202,7 +202,7 @@ public class RightCenterHigh extends LinearOpMode
       telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
       telemetry.update();
     }
-
+    waitForStart();
     if(opModeIsActive()) {
       frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
       backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -212,21 +212,21 @@ public class RightCenterHigh extends LinearOpMode
 
       clawMotor.setPosition(0);
       sleep(900);
-      lift(450);
+      lift(500);
       sleep(900);
-      Forward(36);
-      Left(38);
+      Forward(48);
+      Backward(15);
+      Left(37);
       lift(HI);
       sleep(900);
-      Forward(5);
+      Forward(4);
       sleep(900);
       clawMotor.setPosition(1);
-      sleep(300);
-      Backward(2);
+      sleep(400);
+      Backward(4);
+      sleep(500);
       lift(GR);
-      sleep(900);
-      clawMotor.setPosition(1);
-      sleep(900);
+      sleep(300);
 
 
       if (tagOfInterest == null || tagOfInterest.id == LEFT) {
@@ -234,23 +234,23 @@ public class RightCenterHigh extends LinearOpMode
         telemetry.addLine("One Dot");
         telemetry.update();
 
-        sleep(1000);
-        Right(72);
+        sleep(500);
+        Right(70);
       }
       else if (tagOfInterest.id == MIDDLE) {
         // pathing for two dots
         telemetry.addLine("Two Dots");
         telemetry.update();
 
-        sleep(1000);
+        sleep(500);
         Right(45);
       } else {
         // pathing for three dots
         telemetry.addLine("Three Dots");
         telemetry.update();
 
-        sleep(1000);
-        Right(20);
+        sleep(500);
+        Right(14);
       }
     }
 
