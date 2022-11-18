@@ -217,7 +217,7 @@ public class LeftHigh extends LinearOpMode
       Forward(77);
       sleep(1200);
       Backward(2);
-      Right(11);
+      Right(18);
       sleep(500);
       lift(HI);
       sleep(500);
@@ -237,7 +237,9 @@ public class LeftHigh extends LinearOpMode
         telemetry.update();
 
         sleep(1000);
-        Left(43);
+        Left(15);
+        Backward(4);
+        Left(28);
       }
       else if (tagOfInterest.id == MIDDLE) {
         // pathing for two dots
@@ -245,6 +247,7 @@ public class LeftHigh extends LinearOpMode
         telemetry.update();
 
         sleep(1000);
+        Backward(3);
         Left(15);
       } else {
         // pathing for three dots
@@ -252,7 +255,7 @@ public class LeftHigh extends LinearOpMode
         telemetry.update();
 
         sleep(1000);
-        Right(15);
+        Right(13);
       }
     }
 
