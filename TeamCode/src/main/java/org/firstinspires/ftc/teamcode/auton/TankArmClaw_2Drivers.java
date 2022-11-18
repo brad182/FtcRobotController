@@ -146,7 +146,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
                 clawSwitch = 1;
             }
             else if (gamepad2.left_bumper) {  // claw open
-                clawSwitch = 0.86;
+                clawSwitch = 0;
             }
             
             telemetry.addData("clawSwitch", clawSwitch);
