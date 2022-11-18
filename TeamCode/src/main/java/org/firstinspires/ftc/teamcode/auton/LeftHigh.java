@@ -239,7 +239,7 @@ public class LeftHigh extends LinearOpMode
         sleep(1000);
         Left(15);
         Backward(4);
-        Left(28);
+        Left(25);
       }
       else if (tagOfInterest.id == MIDDLE) {
         // pathing for two dots
