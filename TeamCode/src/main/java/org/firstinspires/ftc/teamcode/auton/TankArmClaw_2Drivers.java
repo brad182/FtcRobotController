@@ -38,18 +38,18 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
         frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeftMotor");
         backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
         frontRightMotor = hardwareMap.get(DcMotor.class, "frontRightMotor");
-        //liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
+        clawMotor = hardwareMap.get(Servo.class, "clawMotor");
+        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
-        clawMotor = hardwareMap.get(Servo.class, "clawMotor");
 
         waitForStart();
 
@@ -146,7 +146,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
                 clawSwitch = 1;
             }
             else if (gamepad2.left_bumper) {  // claw open
-                clawSwitch = 0.86;
+                clawSwitch = 0;
             }
             
             telemetry.addData("clawSwitch", clawSwitch);

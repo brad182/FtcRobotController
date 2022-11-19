@@ -222,7 +222,7 @@ public class RightHigh extends LinearOpMode
       sleep(600);
       Left(8);
       sleep(600);
-      Forward(3);
+      Forward(4);
       sleep(1200);
       clawMotor.setPosition(1);
       sleep(800);

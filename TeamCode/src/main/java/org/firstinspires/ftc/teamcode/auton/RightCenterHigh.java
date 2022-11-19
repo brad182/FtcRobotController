@@ -216,10 +216,10 @@ public class RightCenterHigh extends LinearOpMode
       sleep(900);
       Forward(48);
       Backward(11);
-      Left(34);
+      Left(35);
       lift(HI);
       sleep(900);
-      Forward(3);
+      Forward(4);
       sleep(1500);
       clawMotor.setPosition(1);
       sleep(400);
