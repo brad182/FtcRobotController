@@ -97,7 +97,7 @@ public class LeftCenterHigh extends LinearOpMode
     //telemetry.addData("IMU Example", "Press start to continue...");
     telemetry.update();
 
-    clawMotor.setPosition(1);
+//    clawMotor.setPosition(1);
 
     int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
     camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);

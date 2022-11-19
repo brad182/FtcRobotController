@@ -161,6 +161,10 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
             if (gamepad1.left_bumper) {
                 speedPointer = (speedPointer + 1) % 2;
             }
+            //reset lift encoder button
+            if(gamepad2.dpad_down){
+                liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            }
             
             telemetry.addData("speedPointer", speedPointer);
             telemetry.update();
