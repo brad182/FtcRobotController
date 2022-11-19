@@ -21,7 +21,6 @@
 
 package org.firstinspires.ftc.teamcode.auton;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -32,8 +31,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-// florence commit
-@Autonomous(name = "AutonAprilTag", group = "Vision")
+// THIS IS THE TEMPLATE FOR VISION
+//@Autonomous(name = "AutonAprilTag", group = "Vision")
 public class AutonAprilTag extends LinearOpMode
 {
     OpenCvCamera camera;
