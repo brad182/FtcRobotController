@@ -218,13 +218,13 @@ public class LeftHigh extends LinearOpMode
       sleep(1200);
       Backward(2);
       Right(18);
-      sleep(500);
+      sleep(900);
       lift(HI);
-      sleep(500);
+      sleep(1000);
       Forward(6);
       sleep(3000);
       clawMotor.setPosition(1);
-      sleep(800);
+      sleep(1000);
       Backward(5);
       sleep(500);
       lift(GR);
