@@ -37,6 +37,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
 
+// THIS IS WHERE THE VISION THINKS
 class AprilTagDetectionPipeline extends OpenCvPipeline
 {
     private long nativeApriltagPtr;
