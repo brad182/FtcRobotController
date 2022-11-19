@@ -217,11 +217,11 @@ public class LeftHigh extends LinearOpMode
       Forward(77);
       sleep(1200);
       Backward(2);
-      Right(18);
+      Right(16);
       sleep(900);
       lift(HI);
       sleep(1000);
-      Forward(6);
+      Forward(4);
       sleep(3000);
       clawMotor.setPosition(1);
       sleep(1000);
@@ -297,7 +297,7 @@ public class LeftHigh extends LinearOpMode
     imu.initialize(imuParameters);
 
   }
-  private void Forward(int Inches) {
+  private void Forward(double Inches) {
     Orientation angles;
     double driveangleamount;
     ResetEncoders();
@@ -316,7 +316,7 @@ public class LeftHigh extends LinearOpMode
     frontLeftMotor.setPower(0);
     frontRightMotor.setPower(0);
   }
-  private void Left(int Inches) {
+  private void Left(double Inches) {
     Orientation angles;
     double driveangleamount;
     ResetEncoders();
@@ -336,7 +336,7 @@ public class LeftHigh extends LinearOpMode
     frontLeftMotor.setPower(0);
     frontRightMotor.setPower(0);
   }
-  private void Right(int Inches) {
+  private void Right(double Inches) {
     Orientation angles;
     double driveangleamount;
     ResetEncoders();
@@ -356,7 +356,7 @@ public class LeftHigh extends LinearOpMode
     frontLeftMotor.setPower(0);
     frontRightMotor.setPower(0);
   }
-  private void Backward(int Inches) {
+  private void Backward(double Inches) {
     Orientation angles;
     double driveangleamount;
     ResetEncoders();

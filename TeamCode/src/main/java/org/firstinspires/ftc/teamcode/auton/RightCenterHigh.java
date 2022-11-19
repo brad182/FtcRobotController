@@ -294,7 +294,7 @@ public class RightCenterHigh extends LinearOpMode
     imu.initialize(imuParameters);
 
   }
-  private void Forward(int Inches) {
+  private void Forward(double Inches) {
     Orientation angles;
     double driveangleamount;
     ResetEncoders();
@@ -313,7 +313,7 @@ public class RightCenterHigh extends LinearOpMode
     frontLeftMotor.setPower(0);
     frontRightMotor.setPower(0);
   }
-  private void Left(int Inches) {
+  private void Left(double Inches) {
     Orientation angles;
     double driveangleamount;
     ResetEncoders();
@@ -333,7 +333,7 @@ public class RightCenterHigh extends LinearOpMode
     frontLeftMotor.setPower(0);
     frontRightMotor.setPower(0);
   }
-  private void Right(int Inches) {
+  private void Right(double Inches) {
     Orientation angles;
     double driveangleamount;
     ResetEncoders();
@@ -353,7 +353,7 @@ public class RightCenterHigh extends LinearOpMode
     frontLeftMotor.setPower(0);
     frontRightMotor.setPower(0);
   }
-  private void Backward(int Inches) {
+  private void Backward(double Inches) {
     Orientation angles;
     double driveangleamount;
     ResetEncoders();
