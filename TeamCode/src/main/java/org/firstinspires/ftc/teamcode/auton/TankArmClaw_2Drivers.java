@@ -15,7 +15,8 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
     public DcMotor backRightMotor = null;
     public DcMotor frontRightMotor = null;
     public DcMotor liftMotor = null;
-    public Servo clawMotor = null;
+    public Servo leftClawMotor = null;
+    public Servo rightClawMotor = null;
 
     static final double[] speed = {1.0, 0.15};
     static final double[] toggleDirection = {1.0, -1.0};
@@ -39,7 +40,8 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
         backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
         frontRightMotor = hardwareMap.get(DcMotor.class, "frontRightMotor");
         liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
-        clawMotor = hardwareMap.get(Servo.class, "clawMotor");
+        leftClawMotor = hardwareMap.get(Servo.class, "leftClawMotor");
+        rightClawMotor = hardwareMap.get(Servo.class, "rightClawMotor");
         liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -148,12 +150,13 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
             else if (gamepad2.left_bumper) {  // claw open
                 clawSwitch = 0;
             }
-            
+
             telemetry.addData("clawSwitch", clawSwitch);
             telemetry.update();
-            
-            clawMotor.setPosition(clawSwitch);
-            
+
+            leftClawMotor.setPosition(clawSwitch);
+            rightClawMotor.setPosition(clawSwitch);
+
             
             
             
