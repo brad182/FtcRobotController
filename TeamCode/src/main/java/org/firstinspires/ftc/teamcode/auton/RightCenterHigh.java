@@ -28,7 +28,8 @@ public class RightCenterHigh extends LinearOpMode
   private DcMotor backRightMotor;
   private DcMotor frontRightMotor;
   public int CurrentTargetAngle = 0;
-  public DcMotor liftMotor = null;
+  public DcMotor leftLiftMotor = null;
+  public DcMotor rightLiftMotor = null;
   public Servo clawMotor = null;
 
   static int[] clawToggle = {0, 1};
@@ -77,7 +78,8 @@ public class RightCenterHigh extends LinearOpMode
     backLeftMotor = hardwareMap.get(DcMotor.class, "backLeftMotor");
     backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
     frontRightMotor = hardwareMap.get(DcMotor.class, "frontRightMotor");
-    liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
+    leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
+    rightLiftMotor = hardwareMap.get(DcMotor.class, "rightLiftMotor");
     clawMotor = hardwareMap.get(Servo.class, "clawMotor");
     backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -207,7 +209,8 @@ public class RightCenterHigh extends LinearOpMode
       frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
       backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
       backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      leftLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      rightLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //      clawMotor.setMode(Servo.RunMode.STOP_AND_RESET_ENCODER);
 
       clawMotor.setPosition(0);
@@ -415,9 +418,12 @@ public class RightCenterHigh extends LinearOpMode
     frontRightMotor.setPower(0);
   }
   private void lift(int height) {  // high
-    liftMotor.setTargetPosition(height);
-    liftMotor.setPower(1);
-    liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    leftLiftMotor.setTargetPosition(height);
+    rightLiftMotor.setTargetPosition(height);
+    leftLiftMotor.setPower(1);
+    rightLiftMotor.setPower(1);
+    leftLiftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    rightLiftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
   }
   private void clawOpen(){
     clawMotor.setPosition(1);
