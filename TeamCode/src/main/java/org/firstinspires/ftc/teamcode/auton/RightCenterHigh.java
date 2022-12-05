@@ -219,7 +219,7 @@ public class RightCenterHigh extends LinearOpMode
       sleep(900);
       Forward(48);
       Backward(11);
-      Left(35);
+      Left(37);
       lift(HI);
       sleep(900);
       Forward(4);

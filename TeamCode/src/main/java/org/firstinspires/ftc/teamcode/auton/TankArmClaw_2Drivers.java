@@ -148,7 +148,6 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
             }
 
             telemetry.addData("clawSwitch", clawSwitch);
-            telemetry.update();
             clawMotor.setPosition(clawSwitch);
 
 
@@ -163,7 +162,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
                 rightLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             }
 
-            telemetry.addData("speedPointer", speedPointer);
+            //telemetry.addData("speedPointer", speedPointer);
             telemetry.update();
         }
     }
