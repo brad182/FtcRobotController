@@ -206,83 +206,99 @@ public class RightHigh extends LinearOpMode
     }
 
     if(opModeIsActive()) {
-      if (opModeIsActive()) {
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+      backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+      backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      leftLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      rightLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //      clawMotor.setMode(Servo.RunMode.STOP_AND_RESET_ENCODER);
+/*
+      clawMotor.setPosition(0);
+      sleep(1000);
+      lift(450);
+      sleep(1500);
+      Forward(77);
+      sleep(1200);
+      Backward(3);
+      sleep(600);
+      lift(HI);
+      sleep(600);
+      Left(9);
+      sleep(600);
+      Forward(6);
+      sleep(1200);
+      clawMotor.setPosition(1);
+      sleep(800);
+      Backward(5);
+      sleep(500);
+      lift(GR);
+      sleep(1000);
 
-        clawMotor.setPosition(0);
+*/
+      sleep(1000);
+      lift(450);
+      sleep(1500);
+      Forward(77);
+      sleep(1200);
+      Backward(2);
+      Right(16);
+      sleep(900);
+      lift(HI);
+      sleep(1000);
+      Forward(4);
+      sleep(3000);
+      clawMotor.setPosition(1);
+      sleep(1000);
+      Backward(5);
+      sleep(500);
+      lift(GR);
+      sleep(1000);
+      //cycling
+      // for(int i = 0; i<2; i++){
+
+      TurnRight(90);
+      sleep(1000);
+      Forward(40);
+      sleep(1000);
+      clawMotor.setPosition(0);
+      sleep(1000);
+      Backward(40);
+      sleep(1000);
+      TurnLeft(90);
+      sleep(1000);
+      Forward(4);
+      sleep(3000);
+      clawMotor.setPosition(1);
+      sleep(1000);
+      Backward(5);
+      sleep(500);
+      lift(GR);
+      sleep(1000);
+       //}
+      if (tagOfInterest == null || tagOfInterest.id == LEFT) {
+        // pathing for one dot
+        telemetry.addLine("One Dot");
+        telemetry.update();
+
         sleep(1000);
-        lift(450);
-        sleep(1500);
-        Forward(77);
-        sleep(1200);
-        Backward(2);
-        Left(16);
-        sleep(900);
-        lift(HI);
+        Left(10);
+      }
+      else if (tagOfInterest.id == MIDDLE) {
+        // pathing for two dots
+        telemetry.addLine("Two Dots");
+        telemetry.update();
+
         sleep(1000);
-        Forward(4);
-        sleep(3000);
-        clawMotor.setPosition(1);
+        Right(15);
+      } else {
+        // pathing for three dots
+        telemetry.addLine("Three Dots");
+        telemetry.update();
+
         sleep(1000);
-        Backward(5);
-        sleep(500);
-        lift(GR);
-        sleep(1000);
-
-        //cycling
-        // for(int i = 0; i<2; i++){
-
-          TurnRight(90);
-          sleep(1000);
-          Forward(40);
-          sleep(1000);
-          clawMotor.setPosition(0);
-          sleep(1000);
-          Backward(40);
-          sleep(1000);
-          TurnLeft(90);
-          sleep(1000);
-          Forward(4);
-          sleep(3000);
-          clawMotor.setPosition(1);
-          sleep(1000);
-          Backward(5);
-          sleep(500);
-          lift(GR);
-          sleep(1000);
-
-        // }
-
-        if (tagOfInterest == null || tagOfInterest.id == LEFT) {
-          // pathing for one dot
-          telemetry.addLine("One Dot");
-          telemetry.update();
-
-          sleep(1000);
-          Left(15);
-          Backward(4);
-          Left(25);
-        } else if (tagOfInterest.id == MIDDLE) {
-          // pathing for two dots
-          telemetry.addLine("Two Dots");
-          telemetry.update();
-
-          sleep(1000);
-          Backward(3);
-          Left(15);
-        } else {
-          // pathing for three dots
-          telemetry.addLine("Three Dots");
-          telemetry.update();
-
-          sleep(1000);
-          Right(13);
-        }
+        Right(22);
+        Forward(2);
+        Right(21);
       }
     }
 
