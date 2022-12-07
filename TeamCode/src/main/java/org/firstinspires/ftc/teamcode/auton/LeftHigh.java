@@ -211,9 +211,11 @@ public class LeftHigh extends LinearOpMode
       backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       leftLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       rightLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//      clawMotor.setMode(Servo.RunMode.STOP_AND_RESET_ENCODER);
+      rightLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+      leftLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
       clawMotor.setPosition(0);
+
       sleep(1000);
       lift(450);
       sleep(1500);
@@ -232,7 +234,10 @@ public class LeftHigh extends LinearOpMode
       sleep(500);
       lift(GR);
       sleep(1000);
+      /*
+      
 
+       */
 
       if (tagOfInterest == null || tagOfInterest.id == LEFT) {
         // pathing for one dot
@@ -241,7 +246,7 @@ public class LeftHigh extends LinearOpMode
 
         sleep(1000);
         Left(15);
-        Backward(4);
+        //Backward(4);
         Left(25);
       }
       else if (tagOfInterest.id == MIDDLE) {
