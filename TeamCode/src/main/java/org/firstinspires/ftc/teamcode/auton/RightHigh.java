@@ -274,7 +274,7 @@ public class RightHigh extends LinearOpMode
       sleep(500);
       lift(GR);
       sleep(1000);
-       //}  x
+       //}
       if (tagOfInterest == null || tagOfInterest.id == LEFT) {
         // pathing for one dot
         telemetry.addLine("One Dot");

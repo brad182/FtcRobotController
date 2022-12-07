@@ -237,9 +237,9 @@ public class LeftHigh extends LinearOpMode
       /*
       TurnLeft(90);
       Forward(30);
+/*/
 
-
-       */
+       
 
       if (tagOfInterest == null || tagOfInterest.id == LEFT) {
         // pathing for one dot
