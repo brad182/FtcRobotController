@@ -19,8 +19,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "Left High", group = "Vision")
-public class LeftHigh extends LinearOpMode
+@Autonomous(name = "Left High Preload", group = "Vision")
+public class LeftHighPreload extends LinearOpMode
 {
   private BNO055IMU imu;
   private DcMotor frontLeftMotor;
@@ -42,7 +42,7 @@ public class LeftHigh extends LinearOpMode
   String v = "";
 
   OpenCvCamera camera;
-  org.firstinspires.ftc.teamcode.auton.AprilTagDetectionPipeline aprilTagDetectionPipeline;
+  AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
   static final double FEET_PER_METER = 3.28084;
 
@@ -235,22 +235,21 @@ public class LeftHigh extends LinearOpMode
       //lift(GR);
       //cycle start
       sleep(200);
-
-      TurnLeft(-85);
-      lift(300); 
-      TurnRight(-85);
-      //lift(300);
-      Forward(54);
-      clawMotor.setPosition(0);
-      sleep(750);
-      lift(800);
-      sleep(100);
-      Backward(55);
-      TurnRight(85);
-      TurnLeft(85);
-      Forward(5);
-      clawMotor.setPosition(1);
-      Backward(4);
+//
+//      TurnLeft(-85);
+//      lift(300);
+//      TurnRight(-85);
+//      Forward(54);
+//      clawMotor.setPosition(0);
+//      sleep(750);
+//      lift(800);
+//      sleep(100);
+//      Backward(55);
+//      TurnRight(85);
+//      TurnLeft(85);
+//      Forward(5);
+//      clawMotor.setPosition(1);
+//      Backward(4);
       if (tagOfInterest == null || tagOfInterest.id == LEFT) {
         // pathing for one dot
         telemetry.addLine("One Dot");
@@ -406,10 +405,10 @@ public class LeftHigh extends LinearOpMode
     while (angles.firstAngle > -TargetAngle) {
       angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
       telemetry.addData("rot about Z", angles.firstAngle);
-      backLeftMotor.setPower(0.4);
-      backRightMotor.setPower(-0.4);
-      frontLeftMotor.setPower(0.4);
-      frontRightMotor.setPower(-0.4);
+      backLeftMotor.setPower(0.3);
+      backRightMotor.setPower(-0.3);
+      frontLeftMotor.setPower(0.3);
+      frontRightMotor.setPower(-0.3);
       telemetry.update();
     }
     backLeftMotor.setPower(0);
