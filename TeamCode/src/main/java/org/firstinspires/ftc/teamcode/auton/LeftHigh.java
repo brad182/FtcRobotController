@@ -235,7 +235,9 @@ public class LeftHigh extends LinearOpMode
       lift(GR);
       sleep(1000);
       /*
-      
+      TurnLeft(90);
+      Forward(30);
+
 
        */
 
