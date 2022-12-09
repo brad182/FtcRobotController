@@ -211,70 +211,48 @@ public class RightHighCycle1 extends LinearOpMode
       backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       leftLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       rightLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      leftLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+      rightLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 //      clawMotor.setMode(Servo.RunMode.STOP_AND_RESET_ENCODER);
 
       clawMotor.setPosition(0);
       sleep(1000);
       lift(450);
-      sleep(1500);
       Forward(77);
-      sleep(1200);
-      Backward(3);
-      sleep(600);
-      lift(HI);
-      sleep(600);
-      Left(9);
-      sleep(600);
-      Forward(6);
-      sleep(1200);
-      clawMotor.setPosition(1);
-      sleep(800);
-      Backward(5);
-      sleep(500);
-      lift(GR);
-      sleep(1000);
-
-
-      sleep(1000);
-      lift(450);
-      sleep(1500);
-      Forward(77);
-      sleep(1200);
       Backward(2);
-      Right(16);
-      sleep(900);
+      Left(11);
       lift(HI);
+      Forward(6);
       sleep(1000);
-      Forward(4);
-      sleep(3000);
       clawMotor.setPosition(1);
-      sleep(1000);
-      Backward(5);
       sleep(500);
+      Backward(6);
       lift(GR);
-      sleep(1000);
-      //cycling
-      // for(int i = 0; i<2; i++){
+      sleep(500);
 
-      TurnRight(90);
-      sleep(1000);
-      Forward(40);
-      sleep(1000);
+
+      //cycling
+      TurnRight(82);
+      TurnLeft(82);
+      lift(260);
+      Forward(58);
       clawMotor.setPosition(0);
-      sleep(1000);
-      Backward(40);
-      sleep(1000);
-      TurnLeft(90);
-      sleep(1000);
-      Forward(4);
-      sleep(3000);
+      sleep(200);
+      lift(800);
+      //sleep(500);
+      Backward(56);
+      //sleep(1000);
+      TurnLeft(-90);
+      TurnRight(-90);
+      lift(HI);
+      //sleep(500);
+      Forward(5);
+      sleep(800);
       clawMotor.setPosition(1);
-      sleep(1000);
+      //sleep(1000);
       Backward(5);
-      sleep(500);
       lift(GR);
-      sleep(1000);
-       //}
+
       if (tagOfInterest == null || tagOfInterest.id == LEFT) {
         // pathing for one dot
         telemetry.addLine("One Dot");
@@ -295,10 +273,9 @@ public class RightHighCycle1 extends LinearOpMode
         telemetry.addLine("Three Dots");
         telemetry.update();
 
-        sleep(1000);
-        Right(22);
-        Forward(2);
-        Right(21);
+        Right(39);
+        //Forward(2);
+        //Right(21);
       }
     }
 
