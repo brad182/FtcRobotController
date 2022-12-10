@@ -21,7 +21,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
 //    double clawToggle = 0;
 
     public static final int LOW = 1000; //low value here
-    public static final int MED = 1700; //med value
+    public static final int MED = 1630; //med value
     public static final int HI = 2225; //hi value
     public static final int GRD = 000; //ground value
 
@@ -105,8 +105,6 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
                 frontRightMotor.setPower(speed[speedPointer]);
                 backLeftMotor.setPower(speed[speedPointer]);
             }
-
-
 
             //lift buttons (controller 2)
             if(gamepad2.y){  // high
