@@ -216,39 +216,41 @@ public class LeftHighCycle1 extends LinearOpMode
 
       clawMotor.setPosition(0);
 
-      sleep(1000);
+      sleep(850);
       lift(450);
       //sleep(1500);
-      Forward(77);
+      Forward(76);
       //sleep(1200);
       Backward(2);
-      Right(16);
+      Right(18);
       //sleep(900);
       lift(HI);
       //sleep(1000);
       Forward(4);
-      sleep(1000);
+      sleep(800);
       clawMotor.setPosition(1);
-      sleep(500);
+      //sleep(100);
       Backward(4);
       //sleep(500);
       lift(GR);
       //cycle start
-      sleep(200);
+      sleep(100);
+      Backward(1);
 
-      TurnLeft(-80);
-      TurnRight(-80);
+      TurnLeft(-78);
+      TurnRight(-78);
       lift(260);
-      Forward(53);
+      Forward(56);
       clawMotor.setPosition(0);
-      sleep(500);
+      sleep(200);
       lift(800);
-      sleep(500);
-      Backward(50);
-      TurnRight(85);
-      TurnLeft(85);
+      sleep(200);
+      Backward(53);
+      Right(1.5);
+      TurnRight(90);
+      TurnLeft(90);
       lift(HI);
-      Forward(5);
+      Forward(3.5);
       sleep(800);
       clawMotor.setPosition(1);
       Backward(4);
