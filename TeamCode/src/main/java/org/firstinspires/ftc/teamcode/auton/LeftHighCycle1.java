@@ -226,11 +226,11 @@ public class LeftHighCycle1 extends LinearOpMode
       //sleep(900);
       lift(HI);
       //sleep(1000);
-      Forward(4);
+      Forward(4.5);
       sleep(800);
       clawMotor.setPosition(1);
       //sleep(100);
-      Backward(4);
+      Backward(4.5);
       //sleep(500);
       lift(GR);
       //cycle start
@@ -247,14 +247,17 @@ public class LeftHighCycle1 extends LinearOpMode
       sleep(200);
       Backward(53);
       Right(1.5);
-      TurnRight(90);
-      TurnLeft(90);
+      TurnRight(91);
+      TurnLeft(91);
       lift(HI);
-      Forward(3.5);
+      Forward(5);
       sleep(800);
       clawMotor.setPosition(1);
       Backward(4);
+      clawMotor.setPosition(0);
       lift(GR);
+
+      //parking
       if (tagOfInterest == null || tagOfInterest.id == LEFT) {
         // pathing for one dot
         telemetry.addLine("One Dot");
@@ -268,15 +271,15 @@ public class LeftHighCycle1 extends LinearOpMode
         telemetry.addLine("Two Dots");
         telemetry.update();
 
-        sleep(1000);
+        sleep(500);
         //Backward(3);
-        Left(9);
+        Left(11);
       } else {
         // pathing for three dots
         telemetry.addLine("Three Dots");
         telemetry.update();
 
-        sleep(1000);
+        sleep(500);
         Right(13);
       }
     }
