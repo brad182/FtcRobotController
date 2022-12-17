@@ -330,10 +330,10 @@ public class LeftHighCycle1 extends LinearOpMode
     while (backLeftMotor.getCurrentPosition() + backRightMotor.getCurrentPosition() + frontLeftMotor.getCurrentPosition() + frontRightMotor.getCurrentPosition() < driveangleamount * 4) {
       angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
       telemetry.addData("rot about Z", angles.firstAngle);
-      backLeftMotor.setPower(speed + 0.75 * ((angles.firstAngle) / 10));
-      backRightMotor.setPower(speed + 0.75 * ((angles.firstAngle) / -10));
-      frontLeftMotor.setPower(speed + 0.75 * ((angles.firstAngle) / 10));
-      frontRightMotor.setPower(speed + 0.75 * ((angles.firstAngle) / -10));
+      backLeftMotor.setPower(speed + 0.95 * ((angles.firstAngle) / 10));
+      backRightMotor.setPower(speed + 0.95 * ((angles.firstAngle) / -10));
+      frontLeftMotor.setPower(speed + 0.95 * ((angles.firstAngle) / 10));
+      frontRightMotor.setPower(speed + 0.95 * ((angles.firstAngle) / -10));
       telemetry.update();
     }
     backLeftMotor.setPower(0);
@@ -390,10 +390,10 @@ public class LeftHighCycle1 extends LinearOpMode
     while (backLeftMotor.getCurrentPosition() + backRightMotor.getCurrentPosition() + frontLeftMotor.getCurrentPosition() + frontRightMotor.getCurrentPosition() > - driveangleamount * 4) {
       angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
       telemetry.addData("rot about Z", angles.firstAngle);
-      backLeftMotor.setPower(-speed + 0.75 * ((angles.firstAngle) / 10));
-      backRightMotor.setPower(-speed + 0.75 * ((angles.firstAngle) / -10));
-      frontLeftMotor.setPower(-speed + 0.75 * ((angles.firstAngle) / 10));
-      frontRightMotor.setPower(-speed + 0.75 * ((angles.firstAngle) / -10));
+      backLeftMotor.setPower(-speed + 0.95 * ((angles.firstAngle) / 10));
+      backRightMotor.setPower(-speed + 0.95 * ((angles.firstAngle) / -10));
+      frontLeftMotor.setPower(-speed + 0.95 * ((angles.firstAngle) / 10));
+      frontRightMotor.setPower(-speed + 0.95 * ((angles.firstAngle) / -10));
       telemetry.update();
     }
     backLeftMotor.setPower(0);

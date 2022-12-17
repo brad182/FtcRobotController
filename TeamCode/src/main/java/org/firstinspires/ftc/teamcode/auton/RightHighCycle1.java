@@ -238,7 +238,7 @@ public class RightHighCycle1 extends LinearOpMode
       Forward(58);
       clawMotor.setPosition(0);
       sleep(200);
-      lift(800);
+        lift(800);
       //sleep(500);
       Backward(56);
       //sleep(1000);
