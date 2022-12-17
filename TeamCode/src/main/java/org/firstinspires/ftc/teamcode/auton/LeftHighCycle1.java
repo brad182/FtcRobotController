@@ -54,7 +54,7 @@ public class LeftHighCycle1 extends LinearOpMode
   double fy = 578.272;
   double cx = 402.145;
   double cy = 221.506;
-  double speed = 0.6;
+  double speed = 0.7;
   // UNITS ARE METERS
   double tagsize = 0.166;
 
@@ -85,6 +85,8 @@ public class LeftHighCycle1 extends LinearOpMode
     backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    leftLiftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    rightLiftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     // Create new IMU Parameters object.
     imuParameters = new BNO055IMU.Parameters();
     // Use degrees as angle unit.
@@ -217,23 +219,18 @@ public class LeftHighCycle1 extends LinearOpMode
       clawMotor.setPosition(0);
 
       sleep(850);
+      clawMotor.setPosition(0);
+
       lift(450);
-      //sleep(1500);
       Forward(76);
-      //sleep(1200);
       Backward(2);
       Right(18);
-      //sleep(900);
       lift(HI);
-      //sleep(1000);
       Forward(4.5);
       sleep(800);
       clawMotor.setPosition(1);
-      //sleep(100);
       Backward(4.5);
-      //sleep(500);
       lift(GR);
-      //cycle start
       sleep(100);
       Backward(1);
 
@@ -246,9 +243,9 @@ public class LeftHighCycle1 extends LinearOpMode
       lift(800);
       sleep(200);
       Backward(53);
-      Right(1.5);
-      TurnRight(91);
-      TurnLeft(91);
+      Right(2);
+      TurnRight(90);
+      TurnLeft(90);
       lift(HI);
       Forward(5);
       sleep(800);
@@ -330,10 +327,10 @@ public class LeftHighCycle1 extends LinearOpMode
     while (backLeftMotor.getCurrentPosition() + backRightMotor.getCurrentPosition() + frontLeftMotor.getCurrentPosition() + frontRightMotor.getCurrentPosition() < driveangleamount * 4) {
       angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
       telemetry.addData("rot about Z", angles.firstAngle);
-      backLeftMotor.setPower(speed + 0.95 * ((angles.firstAngle) / 10));
-      backRightMotor.setPower(speed + 0.95 * ((angles.firstAngle) / -10));
-      frontLeftMotor.setPower(speed + 0.95 * ((angles.firstAngle) / 10));
-      frontRightMotor.setPower(speed + 0.95 * ((angles.firstAngle) / -10));
+      backLeftMotor.setPower(speed + 0.4 * ((angles.firstAngle) / 10));
+      backRightMotor.setPower(speed + 0.4 * ((angles.firstAngle) / -10));
+      frontLeftMotor.setPower(speed + 0.4 * ((angles.firstAngle) / 10));
+      frontRightMotor.setPower(speed + 0.4 * ((angles.firstAngle) / -10));
       telemetry.update();
     }
     backLeftMotor.setPower(0);
@@ -350,10 +347,10 @@ public class LeftHighCycle1 extends LinearOpMode
     while (backLeftMotor.getCurrentPosition() - backRightMotor.getCurrentPosition() - frontLeftMotor.getCurrentPosition() + frontRightMotor.getCurrentPosition() < driveangleamount * 4) {
       angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
       telemetry.addData("rot about Z", angles.firstAngle);
-      backLeftMotor.setPower(0.8 + 0.8 * ((angles.firstAngle) / 10));
-      backRightMotor.setPower(-0.8 + 0.8 * ((angles.firstAngle) / -10));
-      frontLeftMotor.setPower(-0.8 + 0.8 * ((angles.firstAngle) / 10));
-      frontRightMotor.setPower(0.8 + 0.8 * ((angles.firstAngle) / -10));
+      backLeftMotor.setPower(0.4 + 0.4 * ((angles.firstAngle) / 10));
+      backRightMotor.setPower(-0.4 + 0.4 * ((angles.firstAngle) / -10));
+      frontLeftMotor.setPower(-0.4 + 0.4 * ((angles.firstAngle) / 10));
+      frontRightMotor.setPower(0.4 + 0.4 * ((angles.firstAngle) / -10));
       telemetry.update();
     }
     backLeftMotor.setPower(0);
@@ -370,10 +367,10 @@ public class LeftHighCycle1 extends LinearOpMode
     while (-backLeftMotor.getCurrentPosition() + backRightMotor.getCurrentPosition() + frontLeftMotor.getCurrentPosition() - frontRightMotor.getCurrentPosition() < driveangleamount * 4) {
       angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
       telemetry.addData("rot about Z", angles.firstAngle);
-      backLeftMotor.setPower(-0.8 + 0.75 * ((angles.firstAngle) / 10));
-      backRightMotor.setPower(0.8 + 0.75 * ((angles.firstAngle) / -10));
-      frontLeftMotor.setPower(0.8 + 0.75 * ((angles.firstAngle) / 10));
-      frontRightMotor.setPower(-0.8 + 0.75 * ((angles.firstAngle) / -10));
+      backLeftMotor.setPower(-speed + 0.4 * ((angles.firstAngle) / 10));
+      backRightMotor.setPower(speed + 0.4 * ((angles.firstAngle) / -10));
+      frontLeftMotor.setPower(speed + 0.4 * ((angles.firstAngle) / 10));
+      frontRightMotor.setPower(-speed + 0.4 * ((angles.firstAngle) / -10));
       telemetry.update();
     }
     backLeftMotor.setPower(0);
@@ -390,10 +387,10 @@ public class LeftHighCycle1 extends LinearOpMode
     while (backLeftMotor.getCurrentPosition() + backRightMotor.getCurrentPosition() + frontLeftMotor.getCurrentPosition() + frontRightMotor.getCurrentPosition() > - driveangleamount * 4) {
       angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
       telemetry.addData("rot about Z", angles.firstAngle);
-      backLeftMotor.setPower(-speed + 0.95 * ((angles.firstAngle) / 10));
-      backRightMotor.setPower(-speed + 0.95 * ((angles.firstAngle) / -10));
-      frontLeftMotor.setPower(-speed + 0.95 * ((angles.firstAngle) / 10));
-      frontRightMotor.setPower(-speed + 0.95 * ((angles.firstAngle) / -10));
+      backLeftMotor.setPower(-speed + 0.4 * ((angles.firstAngle) / 10));
+      backRightMotor.setPower(-speed + 0.4 * ((angles.firstAngle) / -10));
+      frontLeftMotor.setPower(-speed + 0.4 * ((angles.firstAngle) / 10));
+      frontRightMotor.setPower(-speed + 0.4 * ((angles.firstAngle) / -10));
       telemetry.update();
     }
     backLeftMotor.setPower(0);
@@ -450,10 +447,6 @@ public class LeftHighCycle1 extends LinearOpMode
     rightLiftMotor.setPower(1);
     leftLiftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     rightLiftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-       telemetry.addData("left", leftLiftMotor.getDirection());
-        telemetry.addData("right", rightLiftMotor.getDirection());
-        telemetry.update();
-
   }
   private void clawOpen(){
     clawMotor.setPosition(1);

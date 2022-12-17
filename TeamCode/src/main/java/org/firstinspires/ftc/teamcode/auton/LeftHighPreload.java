@@ -222,7 +222,7 @@ public class LeftHighPreload extends LinearOpMode
       Forward(77);
       //sleep(1200);
       Backward(2);
-      Right(16);
+      Right(18);
       //sleep(900);
       lift(HI);
       //sleep(1000);
