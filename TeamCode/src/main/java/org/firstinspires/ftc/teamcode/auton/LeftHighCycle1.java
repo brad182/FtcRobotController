@@ -54,7 +54,7 @@ public class LeftHighCycle1 extends LinearOpMode
   double fy = 578.272;
   double cx = 402.145;
   double cy = 221.506;
-  double speed = 0.7;
+  double speed = 0.9;
   // UNITS ARE METERS
   double tagsize = 0.166;
 
@@ -218,36 +218,38 @@ public class LeftHighCycle1 extends LinearOpMode
 
       clawMotor.setPosition(0);
 
-      sleep(850);
-      clawMotor.setPosition(0);
+      sleep(1000);
+      //clawMotor.setPosition(0);
 
       lift(450);
       Forward(76);
       Backward(2);
       Right(18);
       lift(HI);
-      Forward(4.5);
+      Forward(2);
       sleep(800);
       clawMotor.setPosition(1);
-      Backward(4.5);
       lift(GR);
+      Backward(4.5);
+      lift(260);
       sleep(100);
       Backward(1);
 
       TurnLeft(-78);
       TurnRight(-78);
-      lift(260);
-      Forward(56);
-      clawMotor.setPosition(0);
-      sleep(200);
-      lift(800);
-      sleep(200);
-      Backward(53);
+
       Right(2);
-      TurnRight(90);
-      TurnLeft(90);
+      Forward(55);
+      clawMotor.setPosition(0);
+      sleep(400);
+      lift(800);
+      //sleep(200);
+      Backward(53);
+
+      TurnRight(91);
+      TurnLeft(91);
       lift(HI);
-      Forward(5);
+      Forward(4);
       sleep(800);
       clawMotor.setPosition(1);
       Backward(4);
@@ -260,15 +262,16 @@ public class LeftHighCycle1 extends LinearOpMode
         telemetry.addLine("One Dot");
         telemetry.update();
 
-        sleep(200);
-        Left(38);
+        //sleep(200);
+        Left(36);
+        Backward(3);
       }
       else if (tagOfInterest.id == MIDDLE) {
         // pathing for two dots
         telemetry.addLine("Two Dots");
         telemetry.update();
 
-        sleep(500);
+        //sleep(500);
         //Backward(3);
         Left(11);
       } else {
@@ -276,7 +279,7 @@ public class LeftHighCycle1 extends LinearOpMode
         telemetry.addLine("Three Dots");
         telemetry.update();
 
-        sleep(500);
+        //sleep(500);
         Right(13);
       }
     }
@@ -408,10 +411,10 @@ public class LeftHighCycle1 extends LinearOpMode
     while (angles.firstAngle > -TargetAngle) {
       angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
       telemetry.addData("rot about Z", angles.firstAngle);
-      backLeftMotor.setPower(0.4);
-      backRightMotor.setPower(-0.4);
-      frontLeftMotor.setPower(0.4);
-      frontRightMotor.setPower(-0.4);
+      backLeftMotor.setPower(0.5);
+      backRightMotor.setPower(-0.5);
+      frontLeftMotor.setPower(0.5);
+      frontRightMotor.setPower(-0.5);
       telemetry.update();
     }
     backLeftMotor.setPower(0);
@@ -428,10 +431,10 @@ public class LeftHighCycle1 extends LinearOpMode
     while (angles.firstAngle < -TargetAngle) {
       angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
       telemetry.addData("rot about Z", angles.firstAngle);
-      backLeftMotor.setPower(-.4);
-      backRightMotor.setPower(.4);
-      frontLeftMotor.setPower(-.4);
-      frontRightMotor.setPower(.4);
+      backLeftMotor.setPower(-.5);
+      backRightMotor.setPower(.5);
+      frontLeftMotor.setPower(-.5);
+      frontRightMotor.setPower(.5);
 
       telemetry.update();
     }

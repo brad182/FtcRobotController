@@ -222,11 +222,11 @@ public class LeftHighPreload extends LinearOpMode
       Forward(77);
       //sleep(1200);
       Backward(2);
-      Right(18);
+      Right(17);
       //sleep(900);
       lift(HI);
       //sleep(1000);
-      Forward(5);
+      Forward(2.5);
       sleep(1000);
       clawMotor.setPosition(1);
       sleep(500);
@@ -235,6 +235,7 @@ public class LeftHighPreload extends LinearOpMode
       //lift(GR);
       //cycle start
       sleep(200);
+      lift(GR);
 //
 //      TurnLeft(-85);
 //      lift(300);
@@ -256,9 +257,8 @@ public class LeftHighPreload extends LinearOpMode
         telemetry.update();
 
         sleep(1000);
-        Left(15);
-        //Backward(4);
-        Left(25);
+        Left(37);
+        Backward(4);
       }
       else if (tagOfInterest.id == MIDDLE) {
         // pathing for two dots
@@ -266,7 +266,7 @@ public class LeftHighPreload extends LinearOpMode
         telemetry.update();
 
         sleep(1000);
-        //Backward(3);
+        Backward(3.5);
         Left(15);
       } else {
         // pathing for three dots
@@ -275,6 +275,7 @@ public class LeftHighPreload extends LinearOpMode
 
         sleep(1000);
         Right(13);
+        Backward(2);
       }
     }
 

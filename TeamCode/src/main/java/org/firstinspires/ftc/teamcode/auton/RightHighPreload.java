@@ -215,7 +215,7 @@ public class RightHighPreload extends LinearOpMode
 
       clawMotor.setPosition(0);
       sleep(1000);
-      lift(450);
+      //lift();
       sleep(1500);
       Forward(77);
       sleep(1200);
@@ -223,9 +223,9 @@ public class RightHighPreload extends LinearOpMode
       sleep(600);
       lift(HI);
       sleep(600);
-      Left(9);
+      Left(12);
       sleep(600);
-      Forward(6);
+      //Forward(6);
       sleep(1200);
       clawMotor.setPosition(1);
       sleep(800);
@@ -306,6 +306,9 @@ public class RightHighPreload extends LinearOpMode
     backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    leftLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+    rightLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
     BNO055IMU.Parameters imuParameters;
     // Create new IMU Parameters object.
     imuParameters = new BNO055IMU.Parameters();

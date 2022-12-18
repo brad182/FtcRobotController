@@ -211,6 +211,8 @@ public class RightCenterHigh extends LinearOpMode
       backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       leftLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       rightLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      leftLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+      rightLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 //      clawMotor.setMode(Servo.RunMode.STOP_AND_RESET_ENCODER);
 
       clawMotor.setPosition(0);
@@ -219,11 +221,11 @@ public class RightCenterHigh extends LinearOpMode
       sleep(900);
       Forward(48);
       Backward(11);
-      Left(37);
+      Left(38);
       lift(HI);
       sleep(900);
-      Forward(4);
-      sleep(1500);
+      //Forward(4);
+      //sleep(1500);
       clawMotor.setPosition(1);
       sleep(400);
       Backward(4);

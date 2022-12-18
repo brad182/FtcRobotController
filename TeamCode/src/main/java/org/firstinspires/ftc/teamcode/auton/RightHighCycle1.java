@@ -217,12 +217,16 @@ public class RightHighCycle1 extends LinearOpMode
 
       clawMotor.setPosition(0);
       sleep(1000);
-      lift(450);
+      //lift();
+      sleep(1500);
       Forward(77);
-      Backward(2);
-      Left(11);
+      sleep(1200);
+      Backward(3);
+      sleep(600);
       lift(HI);
-      Forward(6);
+      sleep(600);
+      Left(12);
+      //Forward(3);
       sleep(1000);
       clawMotor.setPosition(1);
       sleep(500);
@@ -232,8 +236,8 @@ public class RightHighCycle1 extends LinearOpMode
 
 
       //cycling
-      TurnRight(82);
-      TurnLeft(82);
+      TurnRight(81);
+      TurnLeft(81);
       lift(260);
       Forward(58);
       clawMotor.setPosition(0);
@@ -242,11 +246,11 @@ public class RightHighCycle1 extends LinearOpMode
       //sleep(500);
       Backward(56);
       //sleep(1000);
-      TurnLeft(-90);
-      TurnRight(-90);
+      TurnLeft(-88);
+      TurnRight(-88);
       lift(HI);
       //sleep(500);
-      Forward(5);
+      Forward(4);
       sleep(800);
       clawMotor.setPosition(1);
       //sleep(1000);
@@ -273,7 +277,7 @@ public class RightHighCycle1 extends LinearOpMode
         telemetry.addLine("Three Dots");
         telemetry.update();
 
-        Right(39);
+        Right(37);
         //Forward(2);
         //Right(21);
       }
