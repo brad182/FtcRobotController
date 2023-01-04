@@ -1,11 +1,15 @@
 //2 drivers
 package org.firstinspires.ftc.teamcode.auton;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.util.Encoder;
+
 @TeleOp (name="Tank Drive - Two Drivers V2", group = "LinearOpMode")
 // testtest
 public class TankArmClaw_2Drivers extends LinearOpMode {
@@ -16,6 +20,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
     public DcMotor leftLiftMotor = null;
     public DcMotor rightLiftMotor = null;
     public Servo clawMotor = null;
+    private Encoder parallelEncoder, perpendicularEncoder;
     static final double[] speed = {1.0, 0.15};
     static final double[] toggleDirection = {1.0, -1.0};
 //    double clawToggle = 0;
@@ -39,6 +44,8 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
         rightLiftMotor = hardwareMap.get(DcMotor.class, "rightLiftMotor");
         clawMotor = hardwareMap.get(Servo.class, "clawMotor");
+        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "parallelEncoder"));
+        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "perpendicularEncoder"));
 
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -161,6 +168,8 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
             }
 
             //telemetry.addData("speedPointer", speedPointer);
+            telemetry.addData("Parallel", parallelEncoder.getCurrentPosition());
+            telemetry.addData("Perpendicular", perpendicularEncoder.getCurrentPosition());
             telemetry.update();
         }
     }

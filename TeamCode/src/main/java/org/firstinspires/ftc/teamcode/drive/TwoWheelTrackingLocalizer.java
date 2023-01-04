@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.util.Encoder;
 import java.util.Arrays;
 import java.util.List;
 
+
 /*
  * Sample tracking wheel localizer implementation assuming the standard configuration:
  *
@@ -33,16 +34,17 @@ import java.util.List;
  *    \--------------/
  *
  */
+
 public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     public static double TICKS_PER_REV = 0;
     public static double WHEEL_RADIUS = 2; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
 
-    public static double PARALLEL_X = 0; // X is the up and down direction
-    public static double PARALLEL_Y = 0; // Y is the strafe direction
+    public static double PARALLEL_X = 1.175; // X is the up and down direction
+    public static double PARALLEL_Y = -5.375; // Y is the strafe direction
 
-    public static double PERPENDICULAR_X = 0;
-    public static double PERPENDICULAR_Y = 0;
+    public static double PERPENDICULAR_X = -7.7;
+    public static double PERPENDICULAR_Y = 0.5;
 
     // Parallel/Perpendicular to the forward axis
     // Parallel wheel is parallel to the forward axis
