@@ -69,43 +69,43 @@ public class LeftRR extends LinearOpMode
                 .forward(52)
                 .build();
 
-        Trajectory backward2 = drive.trajectoryBuilder(new Pose2d()) // back up to get away from vision cone
+        Trajectory backward2 = drive.trajectoryBuilder(forward1.end()) // back up to get away from vision cone
                 .back(2)
                 .build();
 
-        Trajectory strafeRight3 = drive.trajectoryBuilder(new Pose2d())  // align with pole
-                .strafeRight(12)
+        Trajectory strafeRight3 = drive.trajectoryBuilder(backward2.end())  // align with pole
+                .strafeRight(10)
                 .build();
 
-        Trajectory forward4 = drive.trajectoryBuilder(new Pose2d()) // forward to reach the pole
-                .forward(2)
+        Trajectory forward4 = drive.trajectoryBuilder(strafeRight3.end()) // forward to reach the pole
+                .forward(5)
                 .build();
 
-        Trajectory backward5 = drive.trajectoryBuilder(new Pose2d()) // back up
-                .back(4)
+        Trajectory backward5 = drive.trajectoryBuilder(forward4.end()) // back up
+                .back(7)
                 .build();
 
-        Trajectory forward6 = drive.trajectoryBuilder(new Pose2d()) // to cone stack
-                .forward(30)
+        Trajectory forward6 = drive.trajectoryBuilder(backward5.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to cone stack
+                .forward(35)
                 .build();
 
-        Trajectory backward7 = drive.trajectoryBuilder(new Pose2d()) // back to pole
-                .back(30)
+        Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
+                .back(38)
                 .build();
 
-        Trajectory forward8 = drive.trajectoryBuilder(new Pose2d()) // to pole
-                .forward(3)
+        Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to pole
+                .forward(4)
                 .build();
 
-        Trajectory oneDotLeft = drive.trajectoryBuilder(new Pose2d())
+        Trajectory oneDotLeft = drive.trajectoryBuilder(forward8.end())
                 .strafeLeft(36)
                 .build();
 
-        Trajectory twoDotLeft = drive.trajectoryBuilder(new Pose2d())
+        Trajectory twoDotLeft = drive.trajectoryBuilder(forward8.end())
                 .strafeLeft(12)
                 .build();
 
-        Trajectory threeDotRight = drive.trajectoryBuilder(new Pose2d())
+        Trajectory threeDotRight = drive.trajectoryBuilder(forward8.end())
                 .strafeRight(12)
                 .build();
 
@@ -160,7 +160,6 @@ public class LeftRR extends LinearOpMode
                         break;
                     }
                 }
-
                 if(tagFound)
                 {
                     telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
@@ -241,16 +240,17 @@ public class LeftRR extends LinearOpMode
             drive.followTrajectory(backward5);
 
             // start of cycle -------------------------------------------
-            lift(GR);
-            lift(260);
-            sleep(100);
+            lift(00);
+            sleep(300);
+            lift(200);
+            sleep(300);
             drive.turn(Math.toRadians(90));
             drive.followTrajectory(forward6);  // reach cone stack
 
             clawMotor.setPosition(0);  // close claw
             sleep(300);
-            lift(800);
-            sleep(300);
+            lift(200);
+            sleep(200);
             drive.followTrajectory(backward7);
 
             drive.turn(Math.toRadians(-90));  // rotate clockwise to align with pole
@@ -259,6 +259,7 @@ public class LeftRR extends LinearOpMode
             sleep(400);
             clawMotor.setPosition(1);  // drop cone
             drive.followTrajectory(backward5);
+            lift(GR);
             // end of cycle ----------------------------------------------
 
             // start of 1 + 2 auton, save for after 1 + 1 is tested and if there is enough time
