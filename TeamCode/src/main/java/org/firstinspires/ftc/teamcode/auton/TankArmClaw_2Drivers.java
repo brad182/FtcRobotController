@@ -146,9 +146,9 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
 
             //claw
             if (gamepad2.left_trigger >0){
-                clawSwitch = 0.93;
+                clawSwitch = 1;
             }
-            else if (gamepad2.left_bumper) {  // claw open
+            else if (gamepad2.left_bumper) {
                 clawSwitch = 0;
             }
 
