@@ -249,7 +249,7 @@ public class LeftRR extends LinearOpMode
             // start of cycle -------------------------------------------
             lift(00);
             sleep(1500);
-            lift(100);
+            lift(150);
             sleep(1000);
             drive.turn(Math.toRadians(90));
             drive.followTrajectory(forward6);  // reach cone stack
@@ -323,8 +323,8 @@ public class LeftRR extends LinearOpMode
             }
 
              */
-            perpendicularEncoderLift.setPosition(1);
-            parallelEncoderLift.setPosition(1);
+            perpendicularEncoderLift.setPosition(0);
+            parallelEncoderLift.setPosition(0);
         }
     }
 
