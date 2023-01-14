@@ -17,8 +17,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "LeftRR", group = "roadrunner")
-public class LeftRR extends LinearOpMode
+@Autonomous(name = "2 Cone LeftRR", group = "roadrunner")
+public class ThreeConeLeftRR extends LinearOpMode
 {
     public int CurrentTargetAngle = 0;
     public DcMotor leftLiftMotor = null;
@@ -248,14 +248,14 @@ public class LeftRR extends LinearOpMode
 
             // start of cycle -------------------------------------------
             lift(00);
-            sleep(1500);
-            lift(150);
-            sleep(1000);
+            sleep(500);
+            lift(120);  // NEEDS TO BE ADJUST TO BE BASED ON ENCODERS NOT TIME
+            sleep(500);
             drive.turn(Math.toRadians(90));
             drive.followTrajectory(forward6);  // reach cone stack
 
             clawMotor.setPosition(0);  // close claw
-            sleep(1000);
+            sleep(500);
             lift(1000);
             sleep(200);
             drive.followTrajectory(backward7);
@@ -263,43 +263,41 @@ public class LeftRR extends LinearOpMode
             drive.turn(Math.toRadians(-90));  // rotate clockwise to align with pole
 
             lift(HI);
-            sleep(1000);
+            sleep(500);
             drive.followTrajectory(forward8);
-            sleep(800);
+            sleep(500);
             clawMotor.setPosition(1);  // drop cone
-            sleep(800);
+            sleep(500);
             drive.followTrajectory(backward5);
-            sleep(800);
-            lift(GR);
-            // end of cycle ----------------------------------------------
+            sleep(500);
 
-            // start of 1 + 2 auton, save for after 1 + 1 is tested and if there is enough time
-
-            /*
-            // start of cycle -------------------------------------------
-            lift(GR);
-            lift(260);
-            sleep(100);
+            // start of another cycle
+            lift(00);
+            sleep(500);
+            lift(120);  // NEEDS TO BE ADJUST TO BE BASED ON ENCODERS NOT TIME
+            sleep(500);
             drive.turn(Math.toRadians(90));
             drive.followTrajectory(forward6);  // reach cone stack
 
             clawMotor.setPosition(0);  // close claw
-            sleep(300);
-            lift(800);
-            sleep(300);
+            sleep(500);
+            lift(1000);
+            sleep(200);
             drive.followTrajectory(backward7);
 
             drive.turn(Math.toRadians(-90));  // rotate clockwise to align with pole
+
             lift(HI);
+            sleep(500);
             drive.followTrajectory(forward8);
-            sleep(400);
+            sleep(500);
             clawMotor.setPosition(1);  // drop cone
+            sleep(500);
             drive.followTrajectory(backward5);
-            // end of cycle ----------------------------------------------
-            */
+            sleep(500);
+            lift(00);
 
             //parking
-            /*
             if (tagOfInterest == null || tagOfInterest.id == LEFT) {
                 // pathing for one dot
                 telemetry.addLine("One Dot");
@@ -321,8 +319,6 @@ public class LeftRR extends LinearOpMode
 
                 drive.followTrajectory(threeDotRight);
             }
-
-             */
             perpendicularEncoderLift.setPosition(0);
             parallelEncoderLift.setPosition(0);
         }
@@ -345,5 +341,9 @@ public class LeftRR extends LinearOpMode
         rightLiftMotor.setPower(1);
         leftLiftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightLiftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while(leftLiftMotor.isBusy() || rightLiftMotor.isBusy()) {  // so we can run them really fast and make it about encoder count and not sleep time
+
+        }
     }
 }
