@@ -24,7 +24,8 @@ public class LeftRR extends LinearOpMode
     public DcMotor leftLiftMotor = null;
     public DcMotor rightLiftMotor = null;
     public Servo clawMotor = null;
-
+    public Servo perpendicularEncoderLift = null;
+    public Servo parallelEncoderLift = null;
     static int[] clawToggle = {0, 1};
 
     public static final int HI = 3000; //hi value
@@ -70,11 +71,11 @@ public class LeftRR extends LinearOpMode
                 .build();
 
         Trajectory backward2 = drive.trajectoryBuilder(forward1.end()) // back up to get away from vision cone
-                .back(2)
+                .back(2.25)
                 .build();
 
         Trajectory strafeRight3 = drive.trajectoryBuilder(backward2.end())  // align with pole
-                .strafeRight(10)
+                .strafeRight(12.9)
                 .build();
 
         Trajectory forward4 = drive.trajectoryBuilder(strafeRight3.end()) // forward to reach the pole
@@ -82,19 +83,19 @@ public class LeftRR extends LinearOpMode
                 .build();
 
         Trajectory backward5 = drive.trajectoryBuilder(forward4.end()) // back up
-                .back(7)
+                .back(4.65)
                 .build();
 
         Trajectory forward6 = drive.trajectoryBuilder(backward5.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to cone stack
-                .forward(35)
+                .forward(40)
                 .build();
 
         Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
-                .back(38)
+                .back(40)
                 .build();
 
-        Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to pole
-                .forward(4)
+        Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(-90))), false) // to pole
+                .forward(5)
                 .build();
 
         Trajectory oneDotLeft = drive.trajectoryBuilder(forward8.end())
@@ -112,6 +113,8 @@ public class LeftRR extends LinearOpMode
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
         rightLiftMotor = hardwareMap.get(DcMotor.class, "rightLiftMotor");
         clawMotor = hardwareMap.get(Servo.class, "clawMotor");
+        perpendicularEncoderLift = hardwareMap.get(Servo.class, "perpendicularEncoderLift");
+        parallelEncoderLift = hardwareMap.get(Servo.class, "parallelEncoderLift");
         leftLiftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightLiftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -226,6 +229,9 @@ public class LeftRR extends LinearOpMode
             leftLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
             // preload
+            perpendicularEncoderLift.setPosition(1);
+            parallelEncoderLift.setPosition(1);
+
             clawMotor.setPosition(0);
             sleep(1000);
             lift(450);
@@ -234,6 +240,7 @@ public class LeftRR extends LinearOpMode
             drive.followTrajectory(backward2);
             drive.followTrajectory(strafeRight3);
             lift(HI);
+            sleep(700);
             drive.followTrajectory(forward4);
             sleep(500);
             clawMotor.setPosition(1);  // drop preload
@@ -241,24 +248,28 @@ public class LeftRR extends LinearOpMode
 
             // start of cycle -------------------------------------------
             lift(00);
-            sleep(300);
-            lift(200);
-            sleep(300);
+            sleep(1500);
+            lift(100);
+            sleep(1000);
             drive.turn(Math.toRadians(90));
             drive.followTrajectory(forward6);  // reach cone stack
 
             clawMotor.setPosition(0);  // close claw
-            sleep(300);
-            lift(200);
+            sleep(1000);
+            lift(1000);
             sleep(200);
             drive.followTrajectory(backward7);
 
             drive.turn(Math.toRadians(-90));  // rotate clockwise to align with pole
+
             lift(HI);
+            sleep(1000);
             drive.followTrajectory(forward8);
-            sleep(400);
+            sleep(800);
             clawMotor.setPosition(1);  // drop cone
+            sleep(800);
             drive.followTrajectory(backward5);
+            sleep(800);
             lift(GR);
             // end of cycle ----------------------------------------------
 
@@ -288,6 +299,7 @@ public class LeftRR extends LinearOpMode
             */
 
             //parking
+            /*
             if (tagOfInterest == null || tagOfInterest.id == LEFT) {
                 // pathing for one dot
                 telemetry.addLine("One Dot");
@@ -309,6 +321,10 @@ public class LeftRR extends LinearOpMode
 
                 drive.followTrajectory(threeDotRight);
             }
+
+             */
+            perpendicularEncoderLift.setPosition(1);
+            parallelEncoderLift.setPosition(1);
         }
     }
 
