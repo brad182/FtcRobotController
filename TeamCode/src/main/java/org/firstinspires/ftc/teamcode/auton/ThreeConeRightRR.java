@@ -17,7 +17,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "2 Cone RightRR", group = "roadrunner")
+@Autonomous(name = "3 Cone RightRR", group = "roadrunner")
 public class ThreeConeRightRR extends LinearOpMode
 {
     public int CurrentTargetAngle = 0;

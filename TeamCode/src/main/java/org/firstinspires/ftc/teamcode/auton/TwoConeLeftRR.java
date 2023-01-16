@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 @Autonomous(name = "2 Cone LeftRR", group = "roadrunner")
 public class TwoConeLeftRR extends LinearOpMode
 {
+    ElapsedTime time=new ElapsedTime();
     public int CurrentTargetAngle = 0;
     public DcMotor leftLiftMotor = null;
     public DcMotor rightLiftMotor = null;
@@ -75,19 +77,19 @@ public class TwoConeLeftRR extends LinearOpMode
                 .build();
 
         Trajectory strafeRight3 = drive.trajectoryBuilder(backward2.end())  // align with pole
-                .strafeRight(12.9)
+                .strafeRight(10)
                 .build();
 
         Trajectory forward4 = drive.trajectoryBuilder(strafeRight3.end()) // forward to reach the pole
-                .forward(5)
+                .forward(5.5)
                 .build();
 
         Trajectory backward5 = drive.trajectoryBuilder(forward4.end()) // back up
-                .back(4.65)
+                .back(4.75)
                 .build();
 
         Trajectory forward6 = drive.trajectoryBuilder(backward5.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to cone stack
-                .forward(40)
+                .forward(39)
                 .build();
 
         Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
@@ -95,7 +97,7 @@ public class TwoConeLeftRR extends LinearOpMode
                 .build();
 
         Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(-90))), false) // to pole
-                .forward(5)
+                .forward(3.5)
                 .build();
 
         Trajectory oneDotLeft = drive.trajectoryBuilder(forward8.end())
@@ -201,7 +203,7 @@ public class TwoConeLeftRR extends LinearOpMode
             }
 
             telemetry.update();
-            sleep(20);
+            waitFor(20);
         }
 
         /*
@@ -233,44 +235,48 @@ public class TwoConeLeftRR extends LinearOpMode
             parallelEncoderLift.setPosition(1);
 
             clawMotor.setPosition(0);
-            sleep(1000);
-            lift(450);
+            perpendicularEncoderLift.setPosition(1);
 
+            lift(450);
+            waitFor(1000);
             drive.followTrajectory(forward1);
+            perpendicularEncoderLift.setPosition(1);
+            waitFor(500);
             drive.followTrajectory(backward2);
             drive.followTrajectory(strafeRight3);
             lift(HI);
-            sleep(700);
+            waitFor(1000);
             drive.followTrajectory(forward4);
-            sleep(500);
+            waitFor(1000); //was 1000
             clawMotor.setPosition(1);  // drop preload
             drive.followTrajectory(backward5);
 
             // start of cycle -------------------------------------------
             lift(00);
-            sleep(1500);
-            lift(120);
-            sleep(1000);
+            waitFor(1700);
+            lift(86);
+            waitFor(1450);
             drive.turn(Math.toRadians(90));
             drive.followTrajectory(forward6);  // reach cone stack
 
             clawMotor.setPosition(0);  // close claw
-            sleep(1000);
+            waitFor(1000);  // was 1000
             lift(1000);
-            sleep(200);
+            waitFor(200);
             drive.followTrajectory(backward7);
 
             drive.turn(Math.toRadians(-90));  // rotate clockwise to align with pole
 
             lift(HI);
-            sleep(1000);
+            waitFor(1000); // was 1000
             drive.followTrajectory(forward8);
-            sleep(800);
+            //waitFor(800);
             clawMotor.setPosition(1);  // drop cone
-            sleep(800);
+            waitFor(800); // was 800
             drive.followTrajectory(backward5);
-            sleep(800);
+            waitFor(500);
             lift(GR);
+
             // end of cycle ----------------------------------------------
 
             // start of 1 + 2 auton, save for after 1 + 1 is tested and if there is enough time
@@ -279,20 +285,20 @@ public class TwoConeLeftRR extends LinearOpMode
             // start of cycle -------------------------------------------
             lift(GR);
             lift(260);
-            sleep(100);
+            waitFor(100);
             drive.turn(Math.toRadians(90));
             drive.followTrajectory(forward6);  // reach cone stack
 
             clawMotor.setPosition(0);  // close claw
-            sleep(300);
+            waitFor(300);
             lift(800);
-            sleep(300);
+            waitFor(300);
             drive.followTrajectory(backward7);
 
             drive.turn(Math.toRadians(-90));  // rotate clockwise to align with pole
             lift(HI);
             drive.followTrajectory(forward8);
-            sleep(400);
+            waitFor(400);
             clawMotor.setPosition(1);  // drop cone
             drive.followTrajectory(backward5);
             // end of cycle ----------------------------------------------
@@ -342,5 +348,11 @@ public class TwoConeLeftRR extends LinearOpMode
         rightLiftMotor.setPower(1);
         leftLiftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightLiftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    private void waitFor (int x) {
+        time.reset();
+        while(time.milliseconds()<x)
+        {}
     }
 }
