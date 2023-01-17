@@ -30,7 +30,7 @@ public class TwoConeLeftRR extends LinearOpMode
     public Servo parallelEncoderLift = null;
     static int[] clawToggle = {0, 1};
 
-    public static final int HI = 3000; //hi value
+    public static final int HI = 2995; //hi value
     public static final int GR = 00; //ground value
 
     int clawSwitch = 1;
@@ -68,6 +68,8 @@ public class TwoConeLeftRR extends LinearOpMode
     {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
+        Pose2d startPose = new Pose2d(0, 0, 0);
+
         Trajectory forward1 = drive.trajectoryBuilder(new Pose2d())  // drive forward to pole
                 .forward(52)
                 .build();
@@ -77,7 +79,7 @@ public class TwoConeLeftRR extends LinearOpMode
                 .build();
 
         Trajectory strafeRight3 = drive.trajectoryBuilder(backward2.end())  // align with pole
-                .strafeRight(10)
+                .strafeRight(13.35)
                 .build();
 
         Trajectory forward4 = drive.trajectoryBuilder(strafeRight3.end()) // forward to reach the pole
@@ -89,29 +91,32 @@ public class TwoConeLeftRR extends LinearOpMode
                 .build();
 
         Trajectory forward6 = drive.trajectoryBuilder(backward5.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to cone stack
-                .forward(39)
+                .forward(38.4)
                 .build();
 
         Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
-                .back(40)
+                .back(39.15)
                 .build();
 
         Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(-90))), false) // to pole
-                .forward(3.5)
+                .forward(4)
+                .build();
+        Trajectory backward9 = drive.trajectoryBuilder(forward8.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false) // to pole
+                .back(4)
                 .build();
 
-        Trajectory oneDotLeft = drive.trajectoryBuilder(forward8.end())
+
+        Trajectory oneDotLeft = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
                 .strafeLeft(36)
                 .build();
 
-        Trajectory twoDotLeft = drive.trajectoryBuilder(forward8.end())
+        Trajectory twoDotLeft = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
                 .strafeLeft(12)
                 .build();
 
-        Trajectory threeDotRight = drive.trajectoryBuilder(forward8.end())
+        Trajectory threeDotRight = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
                 .strafeRight(12)
                 .build();
-
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
         rightLiftMotor = hardwareMap.get(DcMotor.class, "rightLiftMotor");
         clawMotor = hardwareMap.get(Servo.class, "clawMotor");
@@ -231,31 +236,36 @@ public class TwoConeLeftRR extends LinearOpMode
             leftLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
             // preload
+
             perpendicularEncoderLift.setPosition(1);
             parallelEncoderLift.setPosition(1);
 
-            clawMotor.setPosition(0);
-            perpendicularEncoderLift.setPosition(1);
 
-            lift(450);
+            clawMotor.setPosition(0);
+            //perpendicularEncoderLift.setPosition(0);
+            //sleep(1250);
+            //lift(450);
             waitFor(1000);
             drive.followTrajectory(forward1);
-            perpendicularEncoderLift.setPosition(1);
-            waitFor(500);
+
             drive.followTrajectory(backward2);
             drive.followTrajectory(strafeRight3);
             lift(HI);
             waitFor(1000);
             drive.followTrajectory(forward4);
-            waitFor(1000); //was 1000
+            waitFor(300); //was 1000
             clawMotor.setPosition(1);  // drop preload
             drive.followTrajectory(backward5);
 
             // start of cycle -------------------------------------------
             lift(00);
-            waitFor(1700);
-            lift(86);
-            waitFor(1450);
+            waitFor(2000);
+            lift(215);
+            waitFor(1000);
+            //lift(90);
+            //waitFor(2000);
+            //lift(90);
+            //waitFor(1000);
             drive.turn(Math.toRadians(90));
             drive.followTrajectory(forward6);  // reach cone stack
 
@@ -275,7 +285,8 @@ public class TwoConeLeftRR extends LinearOpMode
             waitFor(800); // was 800
             drive.followTrajectory(backward5);
             waitFor(500);
-            lift(GR);
+
+            drive.followTrajectory(backward9);
 
             // end of cycle ----------------------------------------------
 
@@ -328,7 +339,10 @@ public class TwoConeLeftRR extends LinearOpMode
             }
             perpendicularEncoderLift.setPosition(0);
             parallelEncoderLift.setPosition(0);
+            lift(00);
+            waitFor(2000);
         }
+
     }
 
     void tagToTelemetry (AprilTagDetection detection) {

@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -18,8 +19,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "2 Cone RightRR", group = "roadrunner")
-public class TwoConeRightRR extends LinearOpMode
+@Autonomous(name = "Fails Eric", group = "roadrunner")
+public class TwoConeAttemptFails extends LinearOpMode
 {
     ElapsedTime time=new ElapsedTime();
     public int CurrentTargetAngle = 0;
@@ -30,7 +31,7 @@ public class TwoConeRightRR extends LinearOpMode
     public Servo parallelEncoderLift = null;
     static int[] clawToggle = {0, 1};
 
-    public static final int HI = 2995; //hi value
+    public static final int HI = 3000; //hi value
     public static final int GR = 00; //ground value
 
     int clawSwitch = 1;
@@ -69,7 +70,7 @@ public class TwoConeRightRR extends LinearOpMode
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         Pose2d startPose = new Pose2d(0, 0, 0);
-
+/*
         Trajectory forward1 = drive.trajectoryBuilder(new Pose2d())  // drive forward to pole
                 .forward(52)
                 .build();
@@ -78,11 +79,11 @@ public class TwoConeRightRR extends LinearOpMode
                 .back(2.25)
                 .build();
 
-        Trajectory strafeLeft3 = drive.trajectoryBuilder(backward2.end())  // align with pole
-                .strafeLeft(10.35)
+        Trajectory strafeRight3 = drive.trajectoryBuilder(backward2.end())  // align with pole
+                .strafeRight(10)
                 .build();
 
-        Trajectory forward4 = drive.trajectoryBuilder(strafeLeft3.end()) // forward to reach the pole
+        Trajectory forward4 = drive.trajectoryBuilder(strafeRight3.end()) // forward to reach the pole
                 .forward(5.5)
                 .build();
 
@@ -90,32 +91,62 @@ public class TwoConeRightRR extends LinearOpMode
                 .back(4.75)
                 .build();
 
-        Trajectory forward6 = drive.trajectoryBuilder(backward5.end().plus(new Pose2d(0, 0, Math.toRadians(-90))), false) // to cone stack
+        Trajectory forward6 = drive.trajectoryBuilder(backward5.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to cone stack
                 .forward(39)
                 .build();
 
         Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
-                .back(39.15)
+                .back(40)
                 .build();
 
-        Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to pole
-                .forward(4.25)
+        Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(-90))), false) // to pole
+                .forward(3.5)
                 .build();
-        Trajectory backward9 = drive.trajectoryBuilder(forward8.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false) // to pole
+    */
+
+
+
+        TrajectorySequence toPolePreload = drive.trajectorySequenceBuilder(new Pose2d()) // was startPose inside ()
+                .forward(52)
+                .waitSeconds(0.2)
+                .back(2.25)
+                .strafeRight(11)
+                .UNSTABLE_addTemporalMarkerOffset(-0.6, () -> lift(HI)) // Raise lift somewhere in the straferight
+                .forward(5.5)
+                .build();
+        TrajectorySequence toConeStack = drive.trajectorySequenceBuilder(startPose) // was startPose inside ()
+                .forward(39)
+
+                //.lineToLinearHeading(new Pose2d(0, -39, Math.toRadians(90)))
+
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> lift(86)) //lower lift 1 second before end of movement
+                .waitSeconds(0.1)
+                .build();
+        TrajectorySequence toPole = drive.trajectorySequenceBuilder(startPose) // was startPose inside ()
+                .lineToLinearHeading(new Pose2d(0, 39, Math.toRadians(-90)))
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> lift(HI)) //lower lift 1 second before end of movement
+                .waitSeconds(0.1)
+                .build();
+        Trajectory backward1 = drive.trajectoryBuilder(toPole.end())
                 .back(4)
                 .build();
+        TrajectorySequence backward2 = drive.trajectorySequenceBuilder(toConeStack.end()) // back up to get away from vision cone
+                .back(39)
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> lift(HI))
+                .build();
+        Trajectory forward2 = drive.trajectoryBuilder(toConeStack.end()) // back up to get away from vision cone
+                .forward(4)
+                .build();
+        Trajectory oneDotLeft = drive.trajectoryBuilder(forward2.end())
+                .strafeLeft(36)
+                .build();
 
-
-        Trajectory oneDotLeft = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
+        Trajectory twoDotLeft = drive.trajectoryBuilder(forward2.end())
                 .strafeLeft(12)
                 .build();
 
-        Trajectory twoDotRight = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
+        Trajectory threeDotRight = drive.trajectoryBuilder(forward2.end())
                 .strafeRight(12)
-                .build();
-
-        Trajectory threeDotRight = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
-                .strafeRight(24)
                 .build();
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
         rightLiftMotor = hardwareMap.get(DcMotor.class, "rightLiftMotor");
@@ -240,53 +271,75 @@ public class TwoConeRightRR extends LinearOpMode
             perpendicularEncoderLift.setPosition(1);
             parallelEncoderLift.setPosition(1);
 
-
             clawMotor.setPosition(0);
-            //perpendicularEncoderLift.setPosition(0);
-            //sleep(1250);
-            //lift(450);
             waitFor(1000);
-            drive.followTrajectory(forward1);
-
-            drive.followTrajectory(backward2);
-            drive.followTrajectory(strafeLeft3);
-            lift(HI);
-            waitFor(1000);
-            drive.followTrajectory(forward4);
-            waitFor(300); //was 1000
+            lift(450);
+            waitFor(2000); // Way too long I know
+            drive.followTrajectorySequence(toPolePreload); // To pole (Hopefully)
             clawMotor.setPosition(1);  // drop preload
-            drive.followTrajectory(backward5);
-
-            // start of cycle -------------------------------------------
-            lift(00);
+            drive.followTrajectory(backward1); // to Cones (Hopefully)
+            drive.turn(Math.toRadians(90));
+            drive.followTrajectorySequence(toConeStack);
+            clawMotor.setPosition(0);  // grab +1
             waitFor(2000);
-            lift(235);
-            waitFor(1000);
-            //lift(90);
-            //waitFor(2000);
-            //lift(90);
-            //waitFor(1000);
+            drive.followTrajectorySequence(backward2);
             drive.turn(Math.toRadians(-90));
-            drive.followTrajectory(forward6);  // reach cone stack
-
-            clawMotor.setPosition(0);  // close claw
-            waitFor(1000);  // was 1000
-            lift(1000);
-            waitFor(200);
-            drive.followTrajectory(backward7);
-
-            drive.turn(Math.toRadians(90));  // rotate clockwise to align with pole
-
-            lift(HI);
-            waitFor(1000); // was 1000
-            drive.followTrajectory(forward8);
-            //waitFor(800);
+            drive.followTrajectory(forward2);
+            //drive.followTrajectorySequence(toConeStack);
+            //drive.followTrajectorySequence(toPole); // to pole again (really hoping)
             clawMotor.setPosition(1);  // drop cone
-            waitFor(800); // was 800
-            drive.followTrajectory(backward5);
-            waitFor(500);
+            drive.followTrajectory(backward1); // back up away from pole
+            lift(GR); // Lowers lift
 
-            drive.followTrajectory(backward9);
+
+
+
+//
+//            perpendicularEncoderLift.setPosition(1);
+//            parallelEncoderLift.setPosition(1);
+//
+//            clawMotor.setPosition(0);
+//            perpendicularEncoderLift.setPosition(1);
+//
+//            lift(450);
+//            waitFor(1000);
+//            drive.followTrajectory(forward1);
+//            perpendicularEncoderLift.setPosition(1);
+//            waitFor(500);
+//            drive.followTrajectory(backward2);
+//            drive.followTrajectory(strafeRight3);
+//            lift(HI);
+//            waitFor(1000);
+//            drive.followTrajectory(forward4);
+//            waitFor(1000); //was 1000
+//            clawMotor.setPosition(1);  // drop preload
+//            drive.followTrajectory(backward5);
+//
+//            // start of cycle -------------------------------------------
+//            lift(00);
+//            waitFor(1700);
+//            lift(86);
+//            waitFor(1450);
+//            drive.turn(Math.toRadians(90));
+//            drive.followTrajectory(forward6);  // reach cone stack
+//
+//            clawMotor.setPosition(0);  // close claw
+//            waitFor(1000);  // was 1000
+//            lift(1000);
+//            waitFor(200);
+//            drive.followTrajectory(backward7);
+//
+//            drive.turn(Math.toRadians(-90));  // rotate clockwise to align with pole
+//
+//            lift(HI);
+//            waitFor(1000); // was 1000
+//            drive.followTrajectory(forward8);
+//            //waitFor(800);
+//            clawMotor.setPosition(1);  // drop cone
+//            waitFor(800); // was 800
+//            drive.followTrajectory(backward5);
+//            waitFor(500);
+//            lift(GR);
 
             // end of cycle ----------------------------------------------
 
@@ -321,28 +374,25 @@ public class TwoConeRightRR extends LinearOpMode
                 telemetry.addLine("One Dot");
                 telemetry.update();
 
-                drive.followTrajectory(oneDotLeft);
+//                drive.followTrajectory(oneDotLeft);
             }
             else if (tagOfInterest.id == MIDDLE) {
                 // pathing for two dots
                 telemetry.addLine("Two Dots");
                 telemetry.update();
 
-                drive.followTrajectory(twoDotRight);
+//                drive.followTrajectory(twoDotLeft);
             }
             else {
                 // pathing for three dots
                 telemetry.addLine("Three Dots");
                 telemetry.update();
 
-                drive.followTrajectory(threeDotRight);
+//                drive.followTrajectory(threeDotRight);
             }
             perpendicularEncoderLift.setPosition(0);
             parallelEncoderLift.setPosition(0);
-            lift(00);
-            waitFor(2000);
         }
-
     }
 
     void tagToTelemetry (AprilTagDetection detection) {

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 @Autonomous(name = "3 Cone RightRR", group = "roadrunner")
 public class ThreeConeRightRR extends LinearOpMode
 {
+    ElapsedTime time=new ElapsedTime();
     public int CurrentTargetAngle = 0;
     public DcMotor leftLiftMotor = null;
     public DcMotor rightLiftMotor = null;
@@ -28,7 +30,7 @@ public class ThreeConeRightRR extends LinearOpMode
     public Servo parallelEncoderLift = null;
     static int[] clawToggle = {0, 1};
 
-    public static final int HI = 3000; //hi value
+    public static final int HI = 2995; //hi value
     public static final int GR = 00; //ground value
 
     int clawSwitch = 1;
@@ -66,6 +68,8 @@ public class ThreeConeRightRR extends LinearOpMode
     {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
+        Pose2d startPose = new Pose2d(0, 0, 0);
+
         Trajectory forward1 = drive.trajectoryBuilder(new Pose2d())  // drive forward to pole
                 .forward(52)
                 .build();
@@ -75,41 +79,44 @@ public class ThreeConeRightRR extends LinearOpMode
                 .build();
 
         Trajectory strafeLeft3 = drive.trajectoryBuilder(backward2.end())  // align with pole
-                .strafeRight(12.9)  // NEEDS ADJUSTMENT DUE TO L/R DIFFERENCES
+                .strafeLeft(10.35)
                 .build();
 
         Trajectory forward4 = drive.trajectoryBuilder(strafeLeft3.end()) // forward to reach the pole
-                .forward(5)
+                .forward(5.5)
                 .build();
 
         Trajectory backward5 = drive.trajectoryBuilder(forward4.end()) // back up
-                .back(4.65)
+                .back(4.75)
                 .build();
 
         Trajectory forward6 = drive.trajectoryBuilder(backward5.end().plus(new Pose2d(0, 0, Math.toRadians(-90))), false) // to cone stack
-                .forward(40)
+                .forward(39)
                 .build();
 
         Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
-                .back(40)
+                .back(39.15)
                 .build();
 
         Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to pole
-                .forward(5)
+                .forward(4.25)
+                .build();
+        Trajectory backward9 = drive.trajectoryBuilder(forward8.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false) // to pole
+                .back(4)
                 .build();
 
-        Trajectory oneDotLeft = drive.trajectoryBuilder(forward8.end())
+
+        Trajectory oneDotLeft = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
                 .strafeLeft(12)
                 .build();
 
-        Trajectory twoDotRight = drive.trajectoryBuilder(forward8.end())
+        Trajectory twoDotRight = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
                 .strafeRight(12)
                 .build();
 
-        Trajectory threeDotRight = drive.trajectoryBuilder(forward8.end())
-                .strafeRight(36)
+        Trajectory threeDotRight = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
+                .strafeRight(24)
                 .build();
-
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
         rightLiftMotor = hardwareMap.get(DcMotor.class, "rightLiftMotor");
         clawMotor = hardwareMap.get(Servo.class, "clawMotor");
@@ -201,7 +208,7 @@ public class ThreeConeRightRR extends LinearOpMode
             }
 
             telemetry.update();
-            sleep(20);
+            waitFor(20);
         }
 
         /*
@@ -229,73 +236,84 @@ public class ThreeConeRightRR extends LinearOpMode
             leftLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
             // preload
+
             perpendicularEncoderLift.setPosition(1);
             parallelEncoderLift.setPosition(1);
 
-            clawMotor.setPosition(0);
-            sleep(1000);
-            lift(450);
 
+            clawMotor.setPosition(0);
+            //perpendicularEncoderLift.setPosition(0);
+            sleep(1250);
+            //lift(450);
+            waitFor(1000);
             drive.followTrajectory(forward1);
+
             drive.followTrajectory(backward2);
             drive.followTrajectory(strafeLeft3);
             lift(HI);
-            sleep(700);
+            waitFor(1000);
             drive.followTrajectory(forward4);
-            sleep(500);
+            waitFor(300); //was 1000
             clawMotor.setPosition(1);  // drop preload
             drive.followTrajectory(backward5);
 
             // start of cycle -------------------------------------------
             lift(00);
-            sleep(1500);
-            lift(120);
-            sleep(1000);
+            waitFor(2000);
+            lift(235);
+            waitFor(1000);
+            //lift(90);
+            //waitFor(2000);
+            //lift(90);
+            //waitFor(1000);
             drive.turn(Math.toRadians(-90));
             drive.followTrajectory(forward6);  // reach cone stack
 
             clawMotor.setPosition(0);  // close claw
-            sleep(1000);
+            waitFor(1000);  // was 1000
             lift(1000);
-            sleep(200);
+            waitFor(200);
             drive.followTrajectory(backward7);
 
             drive.turn(Math.toRadians(90));  // rotate clockwise to align with pole
 
             lift(HI);
-            sleep(1000);
+            waitFor(1000); // was 1000
             drive.followTrajectory(forward8);
-            sleep(800);
+            //waitFor(800);
             clawMotor.setPosition(1);  // drop cone
-            sleep(800);
+            waitFor(800); // was 800
             drive.followTrajectory(backward5);
-            sleep(500);
+            waitFor(500);
 
-            // start of another cycle
-            lift(00);
-            sleep(1500);
-            lift(120);
-            sleep(1000);
-            drive.turn(Math.toRadians(-90));
+            drive.followTrajectory(backward9);
+
+            // end of cycle ----------------------------------------------
+
+            // start of 1 + 2 auton, save for after 1 + 1 is tested and if there is enough time
+
+            /*
+            // start of cycle -------------------------------------------
+            lift(GR);
+            lift(260);
+            waitFor(100);
+            drive.turn(Math.toRadians(90));
             drive.followTrajectory(forward6);  // reach cone stack
 
             clawMotor.setPosition(0);  // close claw
-            sleep(1000);
-            lift(1000);
-            sleep(200);
+            waitFor(300);
+            lift(800);
+            waitFor(300);
             drive.followTrajectory(backward7);
 
-            drive.turn(Math.toRadians(90));  // rotate clockwise to align with pole
-
+            drive.turn(Math.toRadians(-90));  // rotate clockwise to align with pole
             lift(HI);
-            sleep(1000);
             drive.followTrajectory(forward8);
-            sleep(800);
+            waitFor(400);
             clawMotor.setPosition(1);  // drop cone
-            sleep(800);
             drive.followTrajectory(backward5);
-            sleep(500);
-            lift(00);
+            // end of cycle ----------------------------------------------
+            */
 
             //parking
             if (tagOfInterest == null || tagOfInterest.id == LEFT) {
@@ -321,7 +339,10 @@ public class ThreeConeRightRR extends LinearOpMode
             }
             perpendicularEncoderLift.setPosition(0);
             parallelEncoderLift.setPosition(0);
+            lift(00);
+            waitFor(2000);
         }
+
     }
 
     void tagToTelemetry (AprilTagDetection detection) {
@@ -341,5 +362,11 @@ public class ThreeConeRightRR extends LinearOpMode
         rightLiftMotor.setPower(1);
         leftLiftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightLiftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    private void waitFor (int x) {
+        time.reset();
+        while(time.milliseconds()<x)
+        {}
     }
 }

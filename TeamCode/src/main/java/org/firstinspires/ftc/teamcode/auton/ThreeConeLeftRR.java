@@ -234,7 +234,7 @@ public class ThreeConeLeftRR extends LinearOpMode
 
             clawMotor.setPosition(0);
             sleep(1000);
-            lift(450);
+//            lift(450);
 
             drive.followTrajectory(forward1);
             drive.followTrajectory(backward2);
