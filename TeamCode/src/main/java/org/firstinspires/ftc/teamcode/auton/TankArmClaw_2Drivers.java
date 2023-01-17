@@ -32,7 +32,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
 
     int speedPointer = 0;
     int directionPointer = 0;
-    double clawSwitch = 1;
+    double clawSwitch = 0.5;
     int liftPosition = 0;
     private TouchSensor end;
     @Override
@@ -145,11 +145,11 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
 
 
             //claw
-            if (gamepad2.left_trigger >0){
-                clawSwitch = 0.8;
+            if (gamepad2.left_trigger >0){  //open
+                clawSwitch = 0.5; //also I changed claw upon init to 0.5 as well
             }
-            else if (gamepad2.left_bumper) {
-                clawSwitch = 0;
+            else if (gamepad2.left_bumper) { //close
+                clawSwitch = 0.3;
             }
 
             telemetry.addData("clawSwitch", clawSwitch);
