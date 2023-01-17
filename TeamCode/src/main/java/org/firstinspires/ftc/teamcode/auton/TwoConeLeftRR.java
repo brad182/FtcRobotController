@@ -95,11 +95,11 @@ public class TwoConeLeftRR extends LinearOpMode
                 .build();
 
         Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
-                .back(39.15)
+                .back(39)
                 .build();
 
         Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(-90))), false) // to pole
-                .forward(4)
+                .forward(4.4)
                 .build();
         Trajectory backward9 = drive.trajectoryBuilder(forward8.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false) // to pole
                 .back(4)

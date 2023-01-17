@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -69,52 +70,25 @@ public class ThreeConeRightRR extends LinearOpMode
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         Pose2d startPose = new Pose2d(0, 0, 0);
-
-        Trajectory forward1 = drive.trajectoryBuilder(new Pose2d())  // drive forward to pole
-                .forward(52)
+        TrajectorySequence toPole = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
+                .forward(60)
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> lift(HI))
                 .build();
-
-        Trajectory backward2 = drive.trajectoryBuilder(forward1.end()) // back up to get away from vision cone
-                .back(2.25)
-                .build();
-
-        Trajectory strafeLeft3 = drive.trajectoryBuilder(backward2.end())  // align with pole
-                .strafeLeft(10.35)
-                .build();
-
-        Trajectory forward4 = drive.trajectoryBuilder(strafeLeft3.end()) // forward to reach the pole
-                .forward(5.5)
-                .build();
-
-        Trajectory backward5 = drive.trajectoryBuilder(forward4.end()) // back up
-                .back(4.75)
-                .build();
-
-        Trajectory forward6 = drive.trajectoryBuilder(backward5.end().plus(new Pose2d(0, 0, Math.toRadians(-90))), false) // to cone stack
-                .forward(39)
-                .build();
-
-        Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
-                .back(39.15)
-                .build();
-
-        Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to pole
-                .forward(4.25)
-                .build();
-        Trajectory backward9 = drive.trajectoryBuilder(forward8.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false) // to pole
-                .back(4)
+        Trajectory forward1 = drive.trajectoryBuilder(new Pose2d())
+                .forward(4)
                 .build();
 
 
-        Trajectory oneDotLeft = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
+
+        Trajectory oneDotLeft = drive.trajectoryBuilder(toPole.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
                 .strafeLeft(12)
                 .build();
 
-        Trajectory twoDotRight = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
+        Trajectory twoDotRight = drive.trajectoryBuilder(toPole.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
                 .strafeRight(12)
                 .build();
 
-        Trajectory threeDotRight = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
+        Trajectory threeDotRight = drive.trajectoryBuilder(toPole.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
                 .strafeRight(24)
                 .build();
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
@@ -242,7 +216,13 @@ public class ThreeConeRightRR extends LinearOpMode
 
 
             clawMotor.setPosition(0);
+            drive.followTrajectorySequence(toPole);
+            drive.turn(Math.toRadians(-45));
+            drive.followTrajectory(forward1);
+            clawMotor.setPosition(1);
+            waitFor(1000);
             //perpendicularEncoderLift.setPosition(0);
+            /*
             sleep(1250);
             //lift(450);
             waitFor(1000);
@@ -287,7 +267,7 @@ public class ThreeConeRightRR extends LinearOpMode
             waitFor(500);
 
             drive.followTrajectory(backward9);
-
+               */
             // end of cycle ----------------------------------------------
 
             // start of 1 + 2 auton, save for after 1 + 1 is tested and if there is enough time
