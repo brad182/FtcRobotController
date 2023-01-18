@@ -75,15 +75,15 @@ public class TwoConeLeftRR extends LinearOpMode
                 .build();
 
         Trajectory backward2 = drive.trajectoryBuilder(forward1.end()) // back up to get away from vision cone
-                .back(2.25)
+                .back(3)
                 .build();
 
         Trajectory strafeRight3 = drive.trajectoryBuilder(backward2.end())  // align with pole
-                .strafeRight(13.35)
+                .strafeRight(13.25)
                 .build();
 
         Trajectory forward4 = drive.trajectoryBuilder(strafeRight3.end()) // forward to reach the pole
-                .forward(5.5)
+                .forward(4.9)
                 .build();
 
         Trajectory backward5 = drive.trajectoryBuilder(forward4.end()) // back up
@@ -91,15 +91,15 @@ public class TwoConeLeftRR extends LinearOpMode
                 .build();
 
         Trajectory forward6 = drive.trajectoryBuilder(backward5.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to cone stack
-                .forward(38.4)
+                .forward(39.5)
                 .build();
 
         Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
-                .back(39)
+                .back(39.5)
                 .build();
 
         Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(-90))), false) // to pole
-                .forward(4.4)
+                .forward(4)
                 .build();
         Trajectory backward9 = drive.trajectoryBuilder(forward8.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false) // to pole
                 .back(4)
@@ -246,6 +246,8 @@ public class TwoConeLeftRR extends LinearOpMode
             //sleep(1250);
             //lift(450);
             waitFor(1000);
+            lift(200);
+            waitFor(1000);
             drive.followTrajectory(forward1);
 
             drive.followTrajectory(backward2);
@@ -339,8 +341,10 @@ public class TwoConeLeftRR extends LinearOpMode
             }
             perpendicularEncoderLift.setPosition(0);
             parallelEncoderLift.setPosition(0);
+
             lift(00);
             waitFor(2000);
+
         }
 
     }
@@ -356,6 +360,8 @@ public class TwoConeLeftRR extends LinearOpMode
     }
 
     private void lift (int height) {  // high
+        leftLiftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightLiftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftLiftMotor.setTargetPosition(height);
         rightLiftMotor.setTargetPosition(height);
         leftLiftMotor.setPower(1);

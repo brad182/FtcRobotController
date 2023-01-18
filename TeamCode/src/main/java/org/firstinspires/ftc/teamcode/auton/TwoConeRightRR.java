@@ -79,7 +79,7 @@ public class TwoConeRightRR extends LinearOpMode
                 .build();
 
         Trajectory strafeLeft3 = drive.trajectoryBuilder(backward2.end())  // align with pole
-                .strafeLeft(9.5)
+                .strafeLeft(11.3)
                 .build();
 
         Trajectory forward4 = drive.trajectoryBuilder(strafeLeft3.end()) // forward to reach the pole
@@ -95,11 +95,11 @@ public class TwoConeRightRR extends LinearOpMode
                 .build();
 
         Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
-                .back(40.25)
+                .back(41.3)
                 .build();
 
         Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to pole
-                .forward(4.35)
+                .forward(5.5)
                 .build();
         Trajectory backward9 = drive.trajectoryBuilder(forward8.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false) // to pole
                 .back(6)
@@ -261,7 +261,7 @@ public class TwoConeRightRR extends LinearOpMode
             lift(00);
             waitFor(2000);
             lift(235);
-            waitFor(1000);
+            waitFor(850); // was 1000
             //lift(90);
             //waitFor(2000);
             //lift(90);
@@ -340,6 +340,7 @@ public class TwoConeRightRR extends LinearOpMode
             perpendicularEncoderLift.setPosition(0);
             parallelEncoderLift.setPosition(0);
             lift(00);
+            lift(1);
             waitFor(2000);
         }
 
@@ -356,6 +357,8 @@ public class TwoConeRightRR extends LinearOpMode
     }
 
     private void lift (int height) {  // high
+        leftLiftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightLiftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftLiftMotor.setTargetPosition(height);
         rightLiftMotor.setTargetPosition(height);
         leftLiftMotor.setPower(1);
