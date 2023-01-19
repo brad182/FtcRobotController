@@ -79,7 +79,7 @@ public class TwoConeRightRR extends LinearOpMode
                 .build();
 
         Trajectory strafeLeft3 = drive.trajectoryBuilder(backward2.end())  // align with pole
-                .strafeLeft(11.3)
+                .strafeLeft(11.2)
                 .build();
 
         Trajectory forward4 = drive.trajectoryBuilder(strafeLeft3.end()) // forward to reach the pole
@@ -95,11 +95,11 @@ public class TwoConeRightRR extends LinearOpMode
                 .build();
 
         Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
-                .back(41.3)
+                .back(41.05)
                 .build();
 
         Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to pole
-                .forward(5.5)
+                .forward(5.15)
                 .build();
         Trajectory backward9 = drive.trajectoryBuilder(forward8.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false) // to pole
                 .back(6)
@@ -115,7 +115,7 @@ public class TwoConeRightRR extends LinearOpMode
                 .build();
 
         Trajectory threeDotRight = drive.trajectoryBuilder(backward9.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false)
-                .strafeRight(34)
+                .strafeRight(36)
                 .build();
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
         rightLiftMotor = hardwareMap.get(DcMotor.class, "rightLiftMotor");

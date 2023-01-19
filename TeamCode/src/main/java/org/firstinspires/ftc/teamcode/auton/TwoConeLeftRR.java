@@ -79,15 +79,15 @@ public class TwoConeLeftRR extends LinearOpMode
                 .build();
 
         Trajectory strafeRight3 = drive.trajectoryBuilder(backward2.end())  // align with pole
-                .strafeRight(13.25)
+                .strafeRight(13.05)
                 .build();
 
         Trajectory forward4 = drive.trajectoryBuilder(strafeRight3.end()) // forward to reach the pole
-                .forward(4.9)
+                .forward(5.6)
                 .build();
 
         Trajectory backward5 = drive.trajectoryBuilder(forward4.end()) // back up
-                .back(4.75)
+                .back(4.7)
                 .build();
 
         Trajectory forward6 = drive.trajectoryBuilder(backward5.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to cone stack
@@ -95,14 +95,14 @@ public class TwoConeLeftRR extends LinearOpMode
                 .build();
 
         Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
-                .back(39.5)
+                .back(40.15)
                 .build();
 
         Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(-90))), false) // to pole
-                .forward(4)
+                .forward(4.6)
                 .build();
         Trajectory backward9 = drive.trajectoryBuilder(forward8.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false) // to pole
-                .back(4)
+                .back(3.2)
                 .build();
 
 
