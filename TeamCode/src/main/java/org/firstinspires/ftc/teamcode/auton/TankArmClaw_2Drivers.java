@@ -32,7 +32,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
 
     int speedPointer = 0;
     int directionPointer = 0;
-    double clawSwitch = 1;
+    double clawSwitch = 0.5;
     int liftPosition = 0;
     private TouchSensor end;
     @Override

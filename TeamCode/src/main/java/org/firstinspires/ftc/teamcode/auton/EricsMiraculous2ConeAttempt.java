@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.auton;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -70,66 +69,83 @@ public class EricsMiraculous2ConeAttempt extends LinearOpMode
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         //    Pose2d startPose = new Pose2d(0, 0, Math.toRadians(-90)); OH THATS WHY IT WASN"T WORKING I WASN'T USING startPose!!!! AHA but I don't need it anymore so I'm commenting it out to avoid confusion
-        Trajectory visionShift = drive.trajectoryBuilder(new Pose2d())
-                .strafeRight(2)
-                .build();
+        double forwardAmount = 48;
+        double forwardPole = 9.1;
+        double forwardCone = 6.2;
+        double turnAmount = 43;
         TrajectorySequence cycle = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
-                .lineToLinearHeading(new Pose2d(49, 0, Math.toRadians(45))) // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
-                .UNSTABLE_addTemporalMarkerOffset(-3, () -> clawMotor.setPosition(0)) // This may or may not need to be moved out into the beginning area
-                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
-                .forward(6)
-                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(1))
-                .back(6)
-                .lineToLinearHeading(new Pose2d(49, -21, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> lift(235))
-                .forward(4)
+                .strafeRight(3.1)
+                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
+                .UNSTABLE_addTemporalMarkerOffset(-3.5, () -> clawMotor.setPosition(0)) // This may or may not need to be moved out into the beginning area
+                .UNSTABLE_addTemporalMarkerOffset(-1.9, () -> lift(HI))
+                .forward(forwardPole)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
+                .back(forwardPole)
+                //go to get CYCLE 1
+                .lineToLinearHeading(new Pose2d(forwardAmount, -23, Math.toRadians(-90)))
+//
+//                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
+//                .UNSTABLE_addTemporalMarkerOffset(-1, () -> lift(150))
+//                .forward(forwardCone)
+//                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0))
+//                .addDisplacementMarker(() -> {lift(600);})
+//                .back(forwardPole)
+//                //return to junction
+//                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // first +1
+//                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
+//                .forward(forwardPole)
+//                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
+//                .back(forwardPole)
+//
+//                //go to get CYCLE 2
+//                .lineToLinearHeading(new Pose2d(forwardAmount, -23, Math.toRadians(-90)))
+
+                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> lift(150))
+                .forward(forwardCone)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0))
-                .back(4)
-                .lineToLinearHeading(new Pose2d(49, 0, Math.toRadians(45))) // first +1
+                .addDisplacementMarker(() -> {lift(600);})
+                .back(forwardCone)
+                //return to junction
+                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // first +1
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
-                .forward(6)
-                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(1))
-                .back(6)
-                .lineToLinearHeading(new Pose2d(49, -21, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> lift(235))
-                .forward(4)
+                .forward(forwardPole)
+                //.addDisplacementMarker(() -> {clawMotor.setPosition(1);})
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
+
+                .back(forwardPole)
+
+
+                .lineToLinearHeading(new Pose2d(forwardAmount, -23, Math.toRadians(-90)))
+
+                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> lift(130))
+                .forward(forwardCone)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0))
-                .back(4)
-                .lineToLinearHeading(new Pose2d(49, 0, Math.toRadians(45))) // second +2
+                .addDisplacementMarker(() -> {lift(600);})
+                .back(forwardCone)
+
+                // fourth +4 // NOTE: THIS IS DIFFERENT TO GET INTO POSITION FOR PARKING
+                .lineToLinearHeading(new Pose2d(49, 10.5, Math.toRadians(0)))
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
-                .forward(6)
-                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(1))
-                .back(6)
-                .lineToLinearHeading(new Pose2d(49, -21, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> lift(235))
-                .forward(4)
-                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0))
-                .back(4)
-                .lineToLinearHeading(new Pose2d(49, 0, Math.toRadians(45))) // third +3
-                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
-                .forward(6)
-                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(1))
-                .back(6)
-                .lineToLinearHeading(new Pose2d(49, -21, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> lift(235))
-                .forward(4)
-                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0))
-                .back(4)
-                .lineToLinearHeading(new Pose2d(49, 10.5, Math.toRadians(0))) // fourth +4 // NOTE: THIS IS DIFFERENT TO GET INTO POSITION FOR PARKING
+
                 .forward(4)// probably needs to be 5?
-                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(1))
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
                 .back(4) // maybe needs to be 6?
                 .build();
 
         TrajectorySequence oneDotLeft = drive.trajectorySequenceBuilder(cycle.end())
                 .lineToLinearHeading(new Pose2d(49, 22, Math.toRadians(-180 + 1e-6)))
+                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
                 .build();
 
         TrajectorySequence twoDotRight = drive.trajectorySequenceBuilder(cycle.end())
                 .lineToLinearHeading(new Pose2d(49, 0, Math.toRadians(-180 + 1e-6)))
+                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
                 .build();
 
         TrajectorySequence threeDotRight = drive.trajectorySequenceBuilder(cycle.end())
+                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
                 .lineToLinearHeading(new Pose2d(49, -23, Math.toRadians(-180 + 1e-6)))
                 .build();
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
@@ -254,7 +270,7 @@ public class EricsMiraculous2ConeAttempt extends LinearOpMode
         if(opModeIsActive()) {
             //THIS IS THE MAIN RUN PLACE Heh it look so empty now
             //shift over
-            drive.followTrajectory(visionShift);
+            //drive.followTrajectory(visionShift);
             // cycling
             drive.followTrajectorySequence(cycle);
 
