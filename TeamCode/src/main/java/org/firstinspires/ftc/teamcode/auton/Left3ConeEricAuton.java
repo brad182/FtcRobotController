@@ -78,9 +78,9 @@ public class Left3ConeEricAuton extends LinearOpMode
                 .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
                 .UNSTABLE_addTemporalMarkerOffset(-3.5, () -> clawMotor.setPosition(0)) // This may or may not need to be moved out into the beginning area
                 .UNSTABLE_addTemporalMarkerOffset(-1.9, () -> lift(HI))
-                .forward(forwardPole)
+                .forward(forwardPole+1.5) //to push signal out of the way
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
-                .back(forwardPole)
+                .back(forwardPole+1.5)
                 //go to get CYCLE 1
                 .lineToLinearHeading(new Pose2d(forwardAmount, 23, Math.toRadians(90)))
 //
