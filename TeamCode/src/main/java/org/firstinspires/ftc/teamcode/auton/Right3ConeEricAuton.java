@@ -1,15 +1,16 @@
 package org.firstinspires.ftc.teamcode.auton;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -17,9 +18,10 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "3 Cone LeftRR", group = "roadrunner")
-public class ThreeConeLeftRR extends LinearOpMode
+@Autonomous(name = "Right3ConeEricAuton", group = "roadrunner")
+public class Right3ConeEricAuton extends LinearOpMode
 {
+    ElapsedTime time=new ElapsedTime();
     public int CurrentTargetAngle = 0;
     public DcMotor leftLiftMotor = null;
     public DcMotor rightLiftMotor = null;
@@ -28,7 +30,7 @@ public class ThreeConeLeftRR extends LinearOpMode
     public Servo parallelEncoderLift = null;
     static int[] clawToggle = {0, 1};
 
-    public static final int HI = 3000; //hi value
+    public static final int HI = 2995; //hi value
     public static final int GR = 00; //ground value
 
     int clawSwitch = 1;
@@ -66,50 +68,86 @@ public class ThreeConeLeftRR extends LinearOpMode
     {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Trajectory forward1 = drive.trajectoryBuilder(new Pose2d())  // drive forward to pole
-                .forward(52)
+        //    Pose2d startPose = new Pose2d(0, 0, Math.toRadians(-90)); OH THATS WHY IT WASN"T WORKING I WASN'T USING startPose!!!! AHA but I don't need it anymore so I'm commenting it out to avoid confusion
+        double forwardAmount = 48;
+        double forwardPole = 9.1;
+        double forwardCone = 6.2;
+        double turnAmount = 43;
+        TrajectorySequence cycle = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
+                .strafeRight(3.1)
+                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
+                .UNSTABLE_addTemporalMarkerOffset(-3.5, () -> clawMotor.setPosition(0)) // This may or may not need to be moved out into the beginning area
+                .UNSTABLE_addTemporalMarkerOffset(-1.9, () -> lift(HI))
+                .forward(forwardPole)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
+                .back(forwardPole)
+                //go to get CYCLE 1
+                .lineToLinearHeading(new Pose2d(forwardAmount, -23, Math.toRadians(-90)))
+//
+//                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
+//                .UNSTABLE_addTemporalMarkerOffset(-1, () -> lift(150))
+//                .forward(forwardCone)
+//                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0))
+//                .addDisplacementMarker(() -> {lift(600);})
+//                .back(forwardPole)
+//                //return to junction
+//                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // first +1
+//                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
+//                .forward(forwardPole)
+//                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
+//                .back(forwardPole)
+//
+//                //go to get CYCLE 2
+//                .lineToLinearHeading(new Pose2d(forwardAmount, -23, Math.toRadians(-90)))
+
+                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> lift(150))
+                .forward(forwardCone)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0))
+                .addDisplacementMarker(() -> {lift(600);})
+                .back(forwardCone)
+                //return to junction
+                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // first +1
+                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
+                .forward(forwardPole)
+                //.addDisplacementMarker(() -> {clawMotor.setPosition(1);})
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
+
+                .back(forwardPole)
+
+
+                .lineToLinearHeading(new Pose2d(forwardAmount, -23, Math.toRadians(-90)))
+
+                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> lift(130))
+                .forward(forwardCone)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0))
+                .addDisplacementMarker(() -> {lift(600);})
+                .back(forwardCone)
+
+                // fourth +4 // NOTE: THIS IS DIFFERENT TO GET INTO POSITION FOR PARKING
+                .lineToLinearHeading(new Pose2d(49, 10.5, Math.toRadians(0)))
+                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
+
+                .forward(4)// probably needs to be 5?
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
+                .back(4) // maybe needs to be 6?
                 .build();
 
-        Trajectory backward2 = drive.trajectoryBuilder(forward1.end()) // back up to get away from vision cone
-                .back(2.25)
+        TrajectorySequence oneDotLeft = drive.trajectorySequenceBuilder(cycle.end())
+                .lineToLinearHeading(new Pose2d(49, 22, Math.toRadians(-180 + 1e-6)))
+                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
                 .build();
 
-        Trajectory strafeRight3 = drive.trajectoryBuilder(backward2.end())  // align with pole
-                .strafeRight(12.9)
+        TrajectorySequence twoDotRight = drive.trajectorySequenceBuilder(cycle.end())
+                .lineToLinearHeading(new Pose2d(49, 0, Math.toRadians(-180 + 1e-6)))
+                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
                 .build();
 
-        Trajectory forward4 = drive.trajectoryBuilder(strafeRight3.end()) // forward to reach the pole
-                .forward(5)
+        TrajectorySequence threeDotRight = drive.trajectorySequenceBuilder(cycle.end())
+                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
+                .lineToLinearHeading(new Pose2d(49, -23, Math.toRadians(-180 + 1e-6)))
                 .build();
-
-        Trajectory backward5 = drive.trajectoryBuilder(forward4.end()) // back up
-                .back(4.65)
-                .build();
-
-        Trajectory forward6 = drive.trajectoryBuilder(backward5.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false) // to cone stack
-                .forward(40)
-                .build();
-
-        Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
-                .back(40)
-                .build();
-
-        Trajectory forward8 = drive.trajectoryBuilder(backward7.end().plus(new Pose2d(0, 0, Math.toRadians(-90))), false) // to pole
-                .forward(5)
-                .build();
-
-        Trajectory oneDotLeft = drive.trajectoryBuilder(forward8.end())
-                .strafeLeft(36)
-                .build();
-
-        Trajectory twoDotLeft = drive.trajectoryBuilder(forward8.end())
-                .strafeLeft(12)
-                .build();
-
-        Trajectory threeDotRight = drive.trajectoryBuilder(forward8.end())
-                .strafeRight(12)
-                .build();
-
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
         rightLiftMotor = hardwareMap.get(DcMotor.class, "rightLiftMotor");
         clawMotor = hardwareMap.get(Servo.class, "clawMotor");
@@ -117,6 +155,13 @@ public class ThreeConeLeftRR extends LinearOpMode
         parallelEncoderLift = hardwareMap.get(Servo.class, "parallelEncoderLift");
         leftLiftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightLiftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        perpendicularEncoderLift.setPosition(1); //These two were moved from the main run area to save time
+        parallelEncoderLift.setPosition(1);
 
 //    clawMotor.setPosition(1);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -201,7 +246,7 @@ public class ThreeConeLeftRR extends LinearOpMode
             }
 
             telemetry.update();
-            sleep(20);
+            waitFor(20);
         }
 
         /*
@@ -223,79 +268,12 @@ public class ThreeConeLeftRR extends LinearOpMode
         }
 
         if(opModeIsActive()) {
-            leftLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-            leftLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+            //THIS IS THE MAIN RUN PLACE Heh it look so empty now
+            //shift over
+            //drive.followTrajectory(visionShift);
+            // cycling
+            drive.followTrajectorySequence(cycle);
 
-            // preload
-            perpendicularEncoderLift.setPosition(1);
-            parallelEncoderLift.setPosition(1);
-
-            clawMotor.setPosition(0);
-            sleep(1000);
-//            lift(450);
-
-            drive.followTrajectory(forward1);
-            drive.followTrajectory(backward2);
-            drive.followTrajectory(strafeRight3);
-            lift(HI);
-            sleep(700);
-            drive.followTrajectory(forward4);
-            sleep(500);
-            clawMotor.setPosition(1);  // drop preload
-            drive.followTrajectory(backward5);
-
-            // start of cycle -------------------------------------------
-            lift(00);
-            sleep(500);
-            lift(120);  // NEEDS TO BE ADJUST TO BE BASED ON ENCODERS NOT TIME
-            sleep(500);
-            drive.turn(Math.toRadians(90));
-            drive.followTrajectory(forward6);  // reach cone stack
-
-            clawMotor.setPosition(0);  // close claw
-            sleep(500);
-            lift(1000);
-            sleep(200);
-            drive.followTrajectory(backward7);
-
-            drive.turn(Math.toRadians(-90));  // rotate clockwise to align with pole
-
-            lift(HI);
-            sleep(500);
-            drive.followTrajectory(forward8);
-            sleep(500);
-            clawMotor.setPosition(1);  // drop cone
-            sleep(500);
-            drive.followTrajectory(backward5);
-            sleep(500);
-
-            // start of another cycle
-            lift(00);
-            sleep(500);
-            lift(120);  // NEEDS TO BE ADJUST TO BE BASED ON ENCODERS NOT TIME
-            sleep(500);
-            drive.turn(Math.toRadians(90));
-            drive.followTrajectory(forward6);  // reach cone stack
-
-            clawMotor.setPosition(0);  // close claw
-            sleep(500);
-            lift(1000);
-            sleep(200);
-            drive.followTrajectory(backward7);
-
-            drive.turn(Math.toRadians(-90));  // rotate clockwise to align with pole
-
-            lift(HI);
-            sleep(500);
-            drive.followTrajectory(forward8);
-            sleep(500);
-            clawMotor.setPosition(1);  // drop cone
-            sleep(500);
-            drive.followTrajectory(backward5);
-            sleep(500);
-            lift(00);
 
             //parking
             if (tagOfInterest == null || tagOfInterest.id == LEFT) {
@@ -303,25 +281,29 @@ public class ThreeConeLeftRR extends LinearOpMode
                 telemetry.addLine("One Dot");
                 telemetry.update();
 
-                drive.followTrajectory(oneDotLeft);
+                drive.followTrajectorySequence(oneDotLeft);
             }
             else if (tagOfInterest.id == MIDDLE) {
                 // pathing for two dots
                 telemetry.addLine("Two Dots");
                 telemetry.update();
 
-                drive.followTrajectory(twoDotLeft);
+                drive.followTrajectorySequence(twoDotRight);
             }
             else {
                 // pathing for three dots
                 telemetry.addLine("Three Dots");
                 telemetry.update();
 
-                drive.followTrajectory(threeDotRight);
+                drive.followTrajectorySequence(threeDotRight);
             }
             perpendicularEncoderLift.setPosition(0);
             parallelEncoderLift.setPosition(0);
+            lift(00);
+            lift(1);
+            waitFor(2000);
         }
+
     }
 
     void tagToTelemetry (AprilTagDetection detection) {
@@ -335,15 +317,19 @@ public class ThreeConeLeftRR extends LinearOpMode
     }
 
     private void lift (int height) {  // high
+        leftLiftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightLiftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftLiftMotor.setTargetPosition(height);
         rightLiftMotor.setTargetPosition(height);
         leftLiftMotor.setPower(1);
         rightLiftMotor.setPower(1);
         leftLiftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightLiftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
 
-        while(leftLiftMotor.isBusy() || rightLiftMotor.isBusy()) {  // so we can run them really fast and make it about encoder count and not sleep time
-
-        }
+    private void waitFor (int x) {
+        time.reset();
+        while(time.milliseconds()<x)
+        {}
     }
 }

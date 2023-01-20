@@ -33,7 +33,7 @@ public class TwoConeLeftRR extends LinearOpMode
     public static final int HI = 2995; //hi value
     public static final int GR = 00; //ground value
 
-    int clawSwitch = 1;
+    double clawSwitch = 0.5;
     int liftPosition = 0;
     String v = "";
 
@@ -102,7 +102,7 @@ public class TwoConeLeftRR extends LinearOpMode
                 .forward(4.6)
                 .build();
         Trajectory backward9 = drive.trajectoryBuilder(forward8.end().plus(new Pose2d(0, 0, Math.toRadians(0))), false) // to pole
-                .back(3.2)
+                .back(4)
                 .build();
 
 
@@ -256,7 +256,7 @@ public class TwoConeLeftRR extends LinearOpMode
             waitFor(1000);
             drive.followTrajectory(forward4);
             waitFor(300); //was 1000
-            clawMotor.setPosition(1);  // drop preload
+            clawMotor.setPosition(clawSwitch);  // drop preload
             drive.followTrajectory(backward5);
 
             // start of cycle -------------------------------------------
@@ -283,7 +283,7 @@ public class TwoConeLeftRR extends LinearOpMode
             waitFor(1000); // was 1000
             drive.followTrajectory(forward8);
             //waitFor(800);
-            clawMotor.setPosition(1);  // drop cone
+            clawMotor.setPosition(clawSwitch);  // drop cone
             waitFor(800); // was 800
             drive.followTrajectory(backward5);
             waitFor(500);
