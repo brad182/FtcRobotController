@@ -72,12 +72,13 @@ public class Right3ConeEricAuton extends LinearOpMode
         double forwardAmount = 48;
         double forwardPole = 9.1;
         double forwardCone = 6.2;
-        double turnAmount = 43;
+        double turnAmount = 38;
         TrajectorySequence cycle = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
                 .strafeRight(3.1)
-                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
+                .forward(52)
                 .UNSTABLE_addTemporalMarkerOffset(-3.5, () -> clawMotor.setPosition(0)) // This may or may not need to be moved out into the beginning area
                 .UNSTABLE_addTemporalMarkerOffset(-1.9, () -> lift(HI))
+                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
                 .forward(forwardPole)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
                 .back(forwardPole)
@@ -126,12 +127,15 @@ public class Right3ConeEricAuton extends LinearOpMode
                 .back(forwardCone)
 
                 // fourth +4 // NOTE: THIS IS DIFFERENT TO GET INTO POSITION FOR PARKING
-                .lineToLinearHeading(new Pose2d(49, 10.5, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(48, 10.5, Math.toRadians(0)))
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
 
-                .forward(4)// probably needs to be 5?
-                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
-                .back(4) // maybe needs to be 6?
+                .forward(7.8)// probably needs to be 5?
+                //.waitSeconds(1.5)
+                .addDisplacementMarker(() -> {clawMotor.setPosition(0.5);})
+                .waitSeconds(1.5)
+                //.UNSTABLE_addTemporalMarkerOffset(-0.08, () -> clawMotor.setPosition(0.5))
+                .back(7.8) // maybe needs to be 6?
                 .build();
 
         TrajectorySequence oneDotLeft = drive.trajectorySequenceBuilder(cycle.end())

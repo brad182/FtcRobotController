@@ -27,13 +27,14 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
 
     public static final int LOW = 1000; //low value here
     public static final int MED = 1630; //med value
-    public static final int HI = 2225; //hi value
+    public static final int HI = 2220; //hi value
     public static final int GRD = 000; //ground value
 
     int speedPointer = 0;
     int directionPointer = 0;
     double clawSwitch = 0.5;
     int liftPosition = 0;
+    double initLiftPosition = 0;
     private TouchSensor end;
     @Override
     public void runOpMode(){
@@ -44,6 +45,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
         rightLiftMotor = hardwareMap.get(DcMotor.class, "rightLiftMotor");
         clawMotor = hardwareMap.get(Servo.class, "clawMotor");
+        initLiftPosition = rightLiftMotor.getCurrentPosition();
         parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "parallelEncoder"));
         perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "perpendicularEncoder"));
 
@@ -139,8 +141,8 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
             else if (gamepad2.right_bumper) {
                 liftPosition -= 4;
             }
-            rightLiftMotor.setPower(0.01 * (liftPosition - (rightLiftMotor.getCurrentPosition() + rightLiftMotor.getCurrentPosition()) / 2));
-            leftLiftMotor.setPower(0.01 * (liftPosition - (rightLiftMotor.getCurrentPosition() + rightLiftMotor.getCurrentPosition()) / 2));
+            rightLiftMotor.setPower(0.01 * (liftPosition - (rightLiftMotor.getCurrentPosition() + rightLiftMotor.getCurrentPosition() - (initLiftPosition*2) ) / 2));
+            leftLiftMotor.setPower(0.01 * (liftPosition - (rightLiftMotor.getCurrentPosition() + rightLiftMotor.getCurrentPosition() - (initLiftPosition*2)) / 2));
 
 
 

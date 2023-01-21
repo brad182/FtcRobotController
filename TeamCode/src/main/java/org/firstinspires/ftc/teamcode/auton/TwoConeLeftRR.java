@@ -341,7 +341,7 @@ public class TwoConeLeftRR extends LinearOpMode
             }
             perpendicularEncoderLift.setPosition(0);
             parallelEncoderLift.setPosition(0);
-
+//GO FORWARD LESS
             lift(00);
             waitFor(2000);
 

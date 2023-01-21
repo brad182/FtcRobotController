@@ -33,7 +33,7 @@ public class TwoConeRightRR extends LinearOpMode
     public static final int HI = 2995; //hi value
     public static final int GR = 00; //ground value
 
-    int clawSwitch = 1;
+    double clawSwitch = 0.5;
     int liftPosition = 0;
     String v = "";
 
@@ -71,11 +71,11 @@ public class TwoConeRightRR extends LinearOpMode
         Pose2d startPose = new Pose2d(0, 0, 0);
 
         Trajectory forward1 = drive.trajectoryBuilder(new Pose2d())  // drive forward to pole
-                .forward(52)
+                .forward(52.5)
                 .build();
 
         Trajectory backward2 = drive.trajectoryBuilder(forward1.end()) // back up to get away from vision cone
-                .back(2.25)
+                .back(2.75)
                 .build();
 
         Trajectory strafeLeft3 = drive.trajectoryBuilder(backward2.end())  // align with pole
@@ -91,7 +91,7 @@ public class TwoConeRightRR extends LinearOpMode
                 .build();
 
         Trajectory forward6 = drive.trajectoryBuilder(backward5.end().plus(new Pose2d(0, 0, Math.toRadians(-90))), false) // to cone stack
-                .forward(40.6)
+                .forward(40.4)
                 .build();
 
         Trajectory backward7 = drive.trajectoryBuilder(forward6.end()) // back to pole
@@ -254,7 +254,7 @@ public class TwoConeRightRR extends LinearOpMode
             waitFor(1000);
             drive.followTrajectory(forward4);
             waitFor(300); //was 1000
-            clawMotor.setPosition(1);  // drop preload
+            clawMotor.setPosition(clawSwitch);  // drop preload
             drive.followTrajectory(backward5);
 
             // start of cycle -------------------------------------------
@@ -281,7 +281,7 @@ public class TwoConeRightRR extends LinearOpMode
             waitFor(1000); // was 1000
             drive.followTrajectory(forward8);
             //waitFor(800);
-            clawMotor.setPosition(1);  // drop cone
+            clawMotor.setPosition(clawSwitch);  // drop cone
             waitFor(800); // was 800
             drive.followTrajectory(backward5);
             waitFor(500);
@@ -341,6 +341,7 @@ public class TwoConeRightRR extends LinearOpMode
             parallelEncoderLift.setPosition(0);
             lift(00);
             lift(1);
+            lift(00);
             waitFor(2000);
         }
 
