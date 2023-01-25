@@ -1,11 +1,11 @@
 //2 drivers
 package org.firstinspires.ftc.teamcode.auton;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.TouchSensor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.util.Encoder;
@@ -23,8 +23,6 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
     public Servo polePusher = null;
     private Encoder parallelEncoder, perpendicularEncoder;
     static final double[] speed = {1.0, 0.15};
-    static final double[] toggleDirection = {1.0, -1.0};
-//    double clawToggle = 0;
 
     public static final int LOW = 1000; //low value here
     public static final int MED = 1630; //med value
@@ -37,11 +35,10 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
     public static final int cone5 = 800; //ground value
 
     int speedPointer = 0;
-    int directionPointer = 0;
     double clawSwitch = 0.5;
     int liftPosition = 0;
     double initLiftPosition = 0;
-    private TouchSensor end;
+//    private TouchSensor end; //ARE WE STILL USING THIS???
     @Override
     public void runOpMode(){
         backLeftMotor = hardwareMap.get(DcMotor.class, "backLeftMotor");
@@ -51,6 +48,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
         rightLiftMotor = hardwareMap.get(DcMotor.class, "rightLiftMotor");
         clawMotor = hardwareMap.get(Servo.class, "clawMotor");
+        polePusher = hardwareMap.get(Servo.class, "polePusher");
         initLiftPosition = rightLiftMotor.getCurrentPosition();
         parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "parallelEncoder"));
         perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "perpendicularEncoder"));
@@ -122,33 +120,41 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
             }
 
 //lift buttons (controller 2)
-            if(gamepad2.y && (gamepad2.dpad_up = false)){  // high
+            if(gamepad2.y && (gamepad2.dpad_left = false)){  // high
                 liftPosition = HI;
+                polePusher.setPosition(1);
             }
-            else if(gamepad2.b && (gamepad2.dpad_right = false)){  // medium
+            else if(gamepad2.b && (gamepad2.dpad_left = false)){  // medium
                 liftPosition = MED;
+                polePusher.setPosition(1);
             }
-            else if(gamepad2.a && (gamepad2.dpad_down = false)){  // low
+            else if(gamepad2.a && (gamepad2.dpad_left = false)){  // low
                 liftPosition = LOW;
+                polePusher.setPosition(0);
             }
             else if (gamepad2.x && (gamepad2.dpad_left = false)){ //GRD
                 liftPosition = GRD;
+                polePusher.setPosition(0);
             }
 
 //stack positions
-            if(gamepad2.y && gamepad2.dpad_up){  // 5 cone stack
+            if(gamepad2.y && gamepad2.dpad_left){  // 5 cone stack
                 liftPosition = cone5;
+                polePusher.setPosition(0);
             }
-            else if(gamepad2.b && gamepad2.dpad_right){  // 4 cone stack
+            else if(gamepad2.b && gamepad2.dpad_left){  // 4 cone stack
                 liftPosition = cone4;
+                polePusher.setPosition(0);
             }
-            else if(gamepad2.a && gamepad2.dpad_down){  // 3 cone stack
+            else if(gamepad2.a && gamepad2.dpad_left){  // 3 cone stack
                 liftPosition = cone3;
+                polePusher.setPosition(0);
             }
             else if (gamepad2.x && gamepad2.dpad_left){ // 2 cone stack
                 liftPosition = cone2;
+                polePusher.setPosition(0);
             }
-
+//manual adjustments
             else if (gamepad2.right_trigger > 0) {
                 liftPosition += 4;
             }
@@ -171,13 +177,11 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
             telemetry.addData("clawSwitch", clawSwitch);
             clawMotor.setPosition(clawSwitch);
 
-
-
             // slow mode
             if (gamepad1.left_bumper) {
                 speedPointer = (speedPointer + 1) % 2;
             }
-            //reset lift encoder button
+            //reset lift encoder button (DO YOU STILL WANT TO TRY TO MAKE THIS WORK??? OR DID U DO SOMETHING ELSE ALREADY HELP IM STUPDI)
 //            if(gamepad2.dpad_down){
 //                leftLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //                rightLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -187,6 +191,26 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
             telemetry.addData("Parallel", parallelEncoder.getCurrentPosition());
             telemetry.addData("Perpendicular", perpendicularEncoder.getCurrentPosition());
             telemetry.update();
+
+            while (gamepad1.b) {
+                frontLeftMotor.setPower(speed[speedPointer]);
+                telemetry.addData("front left position : ", frontLeftMotor.getCurrentPosition());
+            }
+            while (gamepad1.x) {
+                backLeftMotor.setPower(speed[speedPointer]);
+                telemetry.addData("back left position : ", backLeftMotor.getCurrentPosition());
+            }
+            while (gamepad1.a) {
+                frontRightMotor.setPower(speed[speedPointer]);
+                telemetry.addData("front right position : ", frontRightMotor.getCurrentPosition());
+            }
+            while (gamepad1.y) {
+                backRightMotor.setPower(speed[speedPointer]);
+                telemetry.addData("back right position : ", backRightMotor.getCurrentPosition());
+            }
+
+            telemetry.update();
+
         }
     }
 }
