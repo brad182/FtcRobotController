@@ -29,10 +29,10 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
     public static final int HI = 2220; //hi value
     public static final int GRD = 000; //ground value
 
-    public static final int cone2 = 100; //low value here
-    public static final int cone3 = 350; //med value
-    public static final int cone4 = 600; //hi value
-    public static final int cone5 = 800; //ground value
+    public static final int cone2 = 120; //low value here
+    public static final int cone3 = 190; //med value
+    public static final int cone4 = 290; //hi value
+    public static final int cone5 = 360; //ground value
 
     int speedPointer = 0;
     double clawSwitch = 0.5;
@@ -63,8 +63,14 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         rightLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         leftLiftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -118,26 +124,23 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
                 frontRightMotor.setPower(speed[speedPointer]);
                 backLeftMotor.setPower(speed[speedPointer]);
             }
-
-//lift buttons (controller 2)
-            if(gamepad2.y && (gamepad2.dpad_left = false)){  // high
+//original code
+            if(gamepad2.y){  // high
                 liftPosition = HI;
-                polePusher.setPosition(1);
             }
-            else if(gamepad2.b && (gamepad2.dpad_left = false)){  // medium
+            else if(gamepad2.b){  // medium
                 liftPosition = MED;
-                polePusher.setPosition(1);
             }
-            else if(gamepad2.a && (gamepad2.dpad_left = false)){  // low
+            else if(gamepad2.a){  // low
                 liftPosition = LOW;
-                polePusher.setPosition(0);
             }
-            else if (gamepad2.x && (gamepad2.dpad_left = false)){ //GRD
+            else if (gamepad2.x){ //GRD
                 liftPosition = GRD;
-                polePusher.setPosition(0);
             }
 
-//stack positions
+
+
+//2-3-4-5 cone stack macros
             if(gamepad2.y && gamepad2.dpad_left){  // 5 cone stack
                 liftPosition = cone5;
                 polePusher.setPosition(0);
@@ -154,6 +157,25 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
                 liftPosition = cone2;
                 polePusher.setPosition(0);
             }
+
+//GR-LOW-MED-HI
+//            else if(gamepad2.y && (gamepad2.dpad_left = false)){  // high
+//                liftPosition = HI;
+//                polePusher.setPosition(1);
+//            }
+//            else if(gamepad2.b && (gamepad2.dpad_left = false)){  // medium
+//                liftPosition = MED;
+//                polePusher.setPosition(1);
+//            }
+//            else if(gamepad2.a && (gamepad2.dpad_left = false)){  // low
+//                liftPosition = LOW;
+//                polePusher.setPosition(0);
+//            }
+//            else if (gamepad2.x && (gamepad2.dpad_left = false)){ //GRD
+//                liftPosition = GRD;
+//                polePusher.setPosition(0);
+//            }
+
 //manual adjustments
             else if (gamepad2.right_trigger > 0) {
                 liftPosition += 4;
