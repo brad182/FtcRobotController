@@ -23,7 +23,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
     public Servo polePusher = null;
     public Servo perpendicularEncoderLift = null;
     public Servo parallelEncoderLift = null;
-    private Encoder parallelEncoder, perpendicularEncoder;
+    public Encoder parallelEncoder, perpendicularEncoder;
     static final double[] speed = {1.0, 0.15};
 
     public static final int LOW = 1000; //low value here
@@ -57,6 +57,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
         parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "parallelEncoder"));
         perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "perpendicularEncoder"));
 
+//odom wheels retract
         perpendicularEncoderLift.setPosition(0);
         parallelEncoderLift.setPosition(0);
 
