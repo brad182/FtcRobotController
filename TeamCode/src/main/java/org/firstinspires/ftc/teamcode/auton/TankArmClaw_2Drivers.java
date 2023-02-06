@@ -135,18 +135,27 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
 //junction macros
             if(gamepad2.y && gamepad2.dpad_left != true){  // high
                 liftPosition = HI;
-                polePusher.setPosition(0.4);
+                //polePusher.setPosition(0.4);
             }
             else if(gamepad2.b && gamepad2.dpad_left != true){  // medium
                 liftPosition = MED;
-                polePusher.setPosition(0.2);
+                //polePusher.setPosition(0.2);
             }
             else if(gamepad2.a && gamepad2.dpad_left != true){  // low
                 liftPosition = LOW;
-                polePusher.setPosition(0);
+                //polePusher.setPosition(0);
             }
             else if (gamepad2.x && gamepad2.dpad_left != true){ //GRD
                 liftPosition = GRD;
+                //polePusher.setPosition(0);
+            }
+            if (rightLiftMotor.getCurrentPosition() > LOW+10){
+                polePusher.setPosition(0.2);
+            }
+            if (rightLiftMotor.getCurrentPosition() > MED+10){
+                polePusher.setPosition(0.18);
+            }
+            if (rightLiftMotor.getCurrentPosition() < LOW - 10){
                 polePusher.setPosition(0);
             }
 
@@ -155,20 +164,21 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
 //2-3-4-5 cone stack macros
             if(gamepad2.y && gamepad2.dpad_left){  // 5 cone stack
                 liftPosition = cone5;
-                polePusher.setPosition(0);
+                //polePusher.setPosition(0);
             }
             else if(gamepad2.b && gamepad2.dpad_left){  // 4 cone stack
                 liftPosition = cone4;
-                polePusher.setPosition(0);
+                //polePusher.setPosition(0);
             }
             else if(gamepad2.a && gamepad2.dpad_left){  // 3 cone stack
                 liftPosition = cone3;
-                polePusher.setPosition(0);
+                //polePusher.setPosition(0);
             }
             else if (gamepad2.x && gamepad2.dpad_left){ // 2 cone stack
                 liftPosition = cone2;
-                polePusher.setPosition(0);
+                //polePusher.setPosition(0);
             }
+
 
 //manual adjustments
             else if (gamepad2.right_trigger > 0) {
