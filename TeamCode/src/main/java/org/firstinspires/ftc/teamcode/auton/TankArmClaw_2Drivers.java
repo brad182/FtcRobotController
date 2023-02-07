@@ -39,6 +39,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
     int speedPointer = 0;
     double clawSwitch = 0.5;
     int liftPosition = 0;
+    double pushPosition = 0;
     double initLiftPosition = 0;
 //    private TouchSensor end; //ARE WE STILL USING THIS???
     @Override
@@ -150,13 +151,16 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
                 //polePusher.setPosition(0);
             }
             if (rightLiftMotor.getCurrentPosition() > LOW+10){
-                polePusher.setPosition(0.2);
+                pushPosition = 0.2;
+                //polePusher.setPosition(0.2);
             }
             if (rightLiftMotor.getCurrentPosition() > MED+10){
-                polePusher.setPosition(0.18);
+                pushPosition = 0.18;
+                //polePusher.setPosition(0.18);
             }
             if (rightLiftMotor.getCurrentPosition() < LOW - 10){
-                polePusher.setPosition(0);
+                pushPosition = 0;
+                //polePusher.setPosition(0);
             }
 
 
@@ -170,6 +174,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
                 liftPosition = cone4;
                 //polePusher.setPosition(0);
             }
+
             else if(gamepad2.a && gamepad2.dpad_left){  // 3 cone stack
                 liftPosition = cone3;
                 //polePusher.setPosition(0);
@@ -189,7 +194,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
             }
             rightLiftMotor.setPower(0.01 * (liftPosition - (rightLiftMotor.getCurrentPosition() + rightLiftMotor.getCurrentPosition() - (initLiftPosition*2) ) / 2));
             leftLiftMotor.setPower(0.01 * (liftPosition - (rightLiftMotor.getCurrentPosition() + rightLiftMotor.getCurrentPosition() - (initLiftPosition*2)) / 2));
-
+            polePusher.setPosition(pushPosition);
 
 
             //claw
