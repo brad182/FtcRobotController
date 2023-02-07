@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
@@ -77,6 +78,7 @@ public class SampleMecanumDrive extends MecanumDrive {
     public DcMotor leftLiftMotor = null;
     public DcMotor rightLiftMotor = null;
     public Servo clawMotor = null;
+    public TouchSensor touchSensor = null;
 
     private List<DcMotorEx> motors;
 
@@ -132,10 +134,12 @@ public class SampleMecanumDrive extends MecanumDrive {
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
+
         //-----------------------------
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
         rightLiftMotor = hardwareMap.get(DcMotor.class, "rightLiftMotor");
         clawMotor = hardwareMap.get(Servo.class, "clawMotor");
+        touchSensor = hardwareMap.get(TouchSensor.class, "touchSensor");
         //-----------------------------
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);

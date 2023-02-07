@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -19,11 +18,10 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "Left3ConeEricAuton", group = "roadrunner")
-public class Left3ConeEricAuton extends LinearOpMode
+@Autonomous(name = "Left3ConeAuton", group = "roadrunner")
+public class Left3ConeAuton extends LinearOpMode
 {
     ElapsedTime time=new ElapsedTime();
-    private TouchSensor end;
     public int CurrentTargetAngle = 0;
     public DcMotor leftLiftMotor = null;
     public DcMotor rightLiftMotor = null;
@@ -74,7 +72,7 @@ public class Left3ConeEricAuton extends LinearOpMode
         double forwardAmount = 50;
         double forwardPole = 13.8;
         double forwardCone = 5.4;
-        double turnAmount = -42;
+        double turnAmount = -43.5;
         double waittime = 0.2;
         TrajectorySequence cycle = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
                 .strafeRight(1.5)
@@ -139,7 +137,7 @@ public class Left3ConeEricAuton extends LinearOpMode
                 .back(forwardCone)
 
                 //deposit +2 on junction // NOTE: THIS IS DIFFERENT TO GET INTO POSITION FOR PARKING
-                .lineToLinearHeading(new Pose2d(forwardAmount-1.5, -11.9, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(forwardAmount-1.5, -12.2, Math.toRadians(0)))
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
 
                 .forward(10.2)
@@ -163,7 +161,7 @@ public class Left3ConeEricAuton extends LinearOpMode
 
         TrajectorySequence threeDotRight = drive.trajectorySequenceBuilder(cycle.end())
 
-                .lineToLinearHeading(new Pose2d(forwardAmount, -26, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(forwardAmount, -24, Math.toRadians(90)))
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
                 .build();
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
@@ -320,7 +318,8 @@ public class Left3ConeEricAuton extends LinearOpMode
             }
             perpendicularEncoderLift.setPosition(0);
             parallelEncoderLift.setPosition(0);
-            while  (true != end.isPressed()){
+
+            while  (true != drive.touchSensor.isPressed()){  // keep going down until sensor is pressed
                 leftLiftMotor.setPower(-3);
                 rightLiftMotor.setPower(-3);
             }
