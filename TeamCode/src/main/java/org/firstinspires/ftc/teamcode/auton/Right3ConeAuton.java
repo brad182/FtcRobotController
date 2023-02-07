@@ -150,7 +150,7 @@ public class Right3ConeAuton extends LinearOpMode
                 .build();
 //VISION
         TrajectorySequence oneDotLeft = drive.trajectorySequenceBuilder(cycle.end())
-                .lineToLinearHeading(new Pose2d(forwardAmount, 24, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(forwardAmount, 24, Math.toRadians(-90)))
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
                 .build();
 
