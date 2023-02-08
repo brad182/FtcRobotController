@@ -81,7 +81,7 @@ public class Left3ConeAuton extends LinearOpMode
                 //.UNSTABLE_addTemporalMarkerOffset(-2.1, () -> clawMotor.setPosition(0)) // This may or may not need to be moved out into the beginning area
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> polePusher.setPosition(0.13))
 
-                .UNSTABLE_addTemporalMarkerOffset(-1.4, () -> lift(HI))
+                .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> lift(HI))
                 .forward(forwardPole) //to push signal out of the way
 
                 .waitSeconds(waittime)
@@ -150,7 +150,7 @@ public class Left3ConeAuton extends LinearOpMode
                 .build();
 //VISION
         TrajectorySequence oneDotLeft = drive.trajectorySequenceBuilder(cycle.end())
-                .lineToLinearHeading(new Pose2d(forwardAmount+1, 22, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(forwardAmount, 24, Math.toRadians(90)))
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
                 .build();
 

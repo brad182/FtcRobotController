@@ -79,15 +79,15 @@ public class Right3ConeAuton extends LinearOpMode
                 .forward(52)
                 .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
                 //.UNSTABLE_addTemporalMarkerOffset(-2.1, () -> clawMotor.setPosition(0)) // This may or may not need to be moved out into the beginning area
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> polePusher.setPosition(0.13))
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> polePusher.setPosition(0.23))
 
-                .UNSTABLE_addTemporalMarkerOffset(-1.4, () -> lift(HI))
-                .forward(forwardPole) //to push signal out of the way
+                .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> lift(HI))
+                .forward(forwardPole-3.2) //to push signal out of the way
 
                 .waitSeconds(waittime)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
 
-                .back(forwardPole)
+                .back(forwardPole-3.2)
                 .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0))
                 //go to get stack for +1
                 .lineToLinearHeading(new Pose2d(forwardAmount, -23, Math.toRadians(-90)))
@@ -116,7 +116,7 @@ public class Right3ConeAuton extends LinearOpMode
                 .back(forwardCone)
 
                 //junction deposit +1
-                .lineToLinearHeading(new Pose2d(forwardAmount, -1, Math.toRadians(turnAmount))) // first +1
+                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // first +1
                 .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> lift(HI))
                 .forward(forwardPole-0.7)
 
@@ -137,7 +137,7 @@ public class Right3ConeAuton extends LinearOpMode
                 .back(forwardCone)
 
                 //deposit +2 on junction // NOTE: THIS IS DIFFERENT TO GET INTO POSITION FOR PARKING
-                .lineToLinearHeading(new Pose2d(forwardAmount-1.5, 13.3, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(forwardAmount-2, 13.3, Math.toRadians(0)))
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
 
                 .forward(10.2)
@@ -151,18 +151,18 @@ public class Right3ConeAuton extends LinearOpMode
 //VISION
         TrajectorySequence oneDotLeft = drive.trajectorySequenceBuilder(cycle.end())
                 .lineToLinearHeading(new Pose2d(forwardAmount, 24, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
+                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
                 .build();
 
         TrajectorySequence twoDotRight = drive.trajectorySequenceBuilder(cycle.end())
-                .lineToLinearHeading(new Pose2d(forwardAmount, 1.5, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
+                .lineToLinearHeading(new Pose2d(forwardAmount, -2, Math.toRadians(-90)))
+                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
                 .build();
 
         TrajectorySequence threeDotRight = drive.trajectorySequenceBuilder(cycle.end())
 
                 .lineToLinearHeading(new Pose2d(forwardAmount, -26, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
+                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
                 .build();
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
         rightLiftMotor = hardwareMap.get(DcMotor.class, "rightLiftMotor");
@@ -320,8 +320,8 @@ public class Right3ConeAuton extends LinearOpMode
             parallelEncoderLift.setPosition(0);
 
             while  (true != drive.touchSensor.isPressed()){  // keep going down until sensor is pressed
-                leftLiftMotor.setPower(-3);
-                rightLiftMotor.setPower(-3);
+                leftLiftMotor.setPower(-0.3);
+                rightLiftMotor.setPower(-0.3);
             }
 
 
