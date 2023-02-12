@@ -134,19 +134,19 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
                 backLeftMotor.setPower(speed[speedPointer]);
             }
 //junction macros
-            if(gamepad2.y && gamepad2.dpad_left != true){  // high
+            if(gamepad2.y && gamepad2.dpad_left != true&& gamepad2.dpad_right !=true){  // high
                 liftPosition = HI;
                 //polePusher.setPosition(0.4);
             }
-            else if(gamepad2.b && gamepad2.dpad_left != true){  // medium
+            else if(gamepad2.b && gamepad2.dpad_left != true&& gamepad2.dpad_right !=true){  // medium
                 liftPosition = MED;
                 //polePusher.setPosition(0.2);
             }
-            else if(gamepad2.a && gamepad2.dpad_left != true){  // low
+            else if(gamepad2.a && gamepad2.dpad_left != true&& gamepad2.dpad_right !=true){  // low
                 liftPosition = LOW;
                 //polePusher.setPosition(0);
             }
-            else if (gamepad2.x && gamepad2.dpad_left != true){ //GRD
+            else if (gamepad2.x && gamepad2.dpad_left != true && gamepad2.dpad_right !=true){ //GRD
                 liftPosition = GRD;
                 //polePusher.setPosition(0);
             }
@@ -196,10 +196,19 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
             leftLiftMotor.setPower(0.01 * (liftPosition - (rightLiftMotor.getCurrentPosition() + rightLiftMotor.getCurrentPosition() - (initLiftPosition*2)) / 2));
             polePusher.setPosition(pushPosition);
 
+            //junction aligner close and open
+            if(gamepad2.dpad_right&&gamepad2.a){
+                polePusher.setPosition(1);
+            }
+            if(gamepad2.dpad_right&&gamepad2.x){
+                polePusher.setPosition(0);
+            }
+
 
             //claw
             if (gamepad2.left_trigger >0){  //open
                 clawSwitch = 0.5;
+                polePusher.setPosition(0);
             }
             else if (gamepad2.left_bumper) { //close
                 clawSwitch = 0.3;

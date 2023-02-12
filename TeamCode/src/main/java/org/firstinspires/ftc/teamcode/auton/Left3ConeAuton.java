@@ -73,7 +73,7 @@ public class Left3ConeAuton extends LinearOpMode
         double forwardPole = 13.8;
         double forwardCone = 5.4;
         double turnAmount = -43.5;
-        double waittime = 0.2;
+        double waittime = 0.1;
         TrajectorySequence cycle = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
                 .strafeRight(1.5)
                 .forward(52)
@@ -120,7 +120,7 @@ public class Left3ConeAuton extends LinearOpMode
                 .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> lift(HI))
                 .forward(forwardPole-0.7)
 
-                .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0.23))
+                .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0.16))
                 .waitSeconds(waittime)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
 
@@ -141,7 +141,7 @@ public class Left3ConeAuton extends LinearOpMode
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
 
                 .forward(10.2)
-                .UNSTABLE_addTemporalMarkerOffset(-.8, () -> polePusher.setPosition(0.23))
+                .UNSTABLE_addTemporalMarkerOffset(-.8, () -> polePusher.setPosition(0.15))
                 .waitSeconds(waittime)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
                 .back(10.2)
