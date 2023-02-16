@@ -183,12 +183,9 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
                 pushPosition = 0;
             }
 
-//pole pusher close and open
-            if(gamepad2.dpad_right&&gamepad2.a){
-                pushPosition = 0.15;
-            }
+//pole pusher stick out or retract, switches btwn 0 and approx 14.3 (1/7)
             if(gamepad2.dpad_right&&gamepad2.x){
-                pushPosition = 0;
+                pushPosition = ((pushPosition + 1) % 2)/7;
             }
 
             polePusher.setPosition(pushPosition);
