@@ -60,7 +60,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
 
 //odom wheels retract
         perpendicularEncoderLift.setPosition(0);
-        parallelEncoderLift.setPosition(0);
+        parallelEncoderLift.setPosition(-0.5);
 
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
