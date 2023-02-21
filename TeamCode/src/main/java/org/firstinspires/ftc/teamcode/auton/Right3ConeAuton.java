@@ -84,6 +84,9 @@ public class Right3ConeAuton extends LinearOpMode
                 .forward(forwardPole-3.3) //to push signal out of the way
 
                 .waitSeconds(waittime)
+
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
+
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
 
                 .back(forwardPole-3.3)
@@ -121,6 +124,7 @@ public class Right3ConeAuton extends LinearOpMode
 
                 .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0.16))
                 .waitSeconds(waittime)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
 
                 .back(forwardPole-1)
@@ -142,6 +146,7 @@ public class Right3ConeAuton extends LinearOpMode
                 .forward(10.2)
                 .UNSTABLE_addTemporalMarkerOffset(-.8, () -> polePusher.setPosition(0.16))
                 .waitSeconds(waittime)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
                 .back(10.2)
                 .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0))
