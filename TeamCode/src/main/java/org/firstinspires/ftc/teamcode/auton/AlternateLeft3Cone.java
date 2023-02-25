@@ -85,6 +85,8 @@ public class AlternateLeft3Cone extends LinearOpMode
                 .forward(forwardPole) //to push signal out of the way
 
                 .waitSeconds(waittime)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
+
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
 
                 .back(forwardPole)
@@ -122,6 +124,9 @@ public class AlternateLeft3Cone extends LinearOpMode
 
                 .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0.16))
                 .waitSeconds(waittime)
+
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
+
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
 
                 .back(forwardPole-0.7)
@@ -132,6 +137,7 @@ public class AlternateLeft3Cone extends LinearOpMode
                 .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> lift(130))
                 .forward(forwardCone)
+
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0))
                 .addDisplacementMarker(() -> {lift(600);})
                 .back(forwardCone)
@@ -143,6 +149,8 @@ public class AlternateLeft3Cone extends LinearOpMode
                 .forward(10.2)
                 .UNSTABLE_addTemporalMarkerOffset(-.8, () -> polePusher.setPosition(0.15))
                 .waitSeconds(waittime)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
+
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
                 .back(10.2)
                 .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0))
@@ -291,6 +299,7 @@ public class AlternateLeft3Cone extends LinearOpMode
             //drive.followTrajectory(visionShift);
             // cycling
             camera.closeCameraDevice();
+            sleep(1200); // offset timing
             drive.followTrajectorySequence(cycle);
 
 

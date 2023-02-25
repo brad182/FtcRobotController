@@ -18,7 +18,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "AlternateRight3Cone", group = "roadrunner")
+@Autonomous(name = "AlternateRight3ConeAuton", group = "roadrunner")
 public class AlternateRight3Cone extends LinearOpMode
 {
     ElapsedTime time=new ElapsedTime();
@@ -74,29 +74,82 @@ public class AlternateRight3Cone extends LinearOpMode
         double forwardCone = 5.4;
         double turnAmount = 46.2;
         double waittime = 0.2;
-
-        // use
-        // .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
-        // to perform an action x amount of sections before the last call
         TrajectorySequence cycle = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
-                .forward(50)
-                .turn(90)  // turn left 90
-                .forward(24) // reach high junction
-                .turn(45) // FIX TURN VALUE SIGN, SHOULD ROTATE 45 to reach the junction
+                .forward(52)
+                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount)))
                 // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> polePusher.setPosition(0.15))
 
                 .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> lift(HI))
-                .forward(forwardPole-3.3) // reach junction
+                .forward(forwardPole-3.3) //to push signal out of the way
 
                 .waitSeconds(waittime)
+
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
+
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
 
                 .back(forwardPole-3.3)
                 .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0))
                 //go to get stack for +1
                 .lineToLinearHeading(new Pose2d(forwardAmount, -23, Math.toRadians(-90)))
+//lift doesnt go up on cycle 1, cycle 2 too far forward
+//                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
+//                .UNSTABLE_addTemporalMarkerOffset(-1, () -> lift(150))
+//                .forward(forwardCone)
+//                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0))
+//                .addDisplacementMarker(() -> {lift(600);})
+//                .back(forwardPole)
+//                //return to junction
+//                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // first +1
+//                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
+//                .forward(forwardPole)
+//                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
+//                .back(forwardPole)
+//
+//                //go to STACK +2
+//                .lineToLinearHeading(new Pose2d(forwardAmount, -23, Math.toRadians(90)))
 
+                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
+                .UNSTABLE_addTemporalMarkerOffset(-0.6, () -> lift(160))
+                .forward(forwardCone)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0))
+                .addDisplacementMarker(() -> {lift(850);})
+                .back(forwardCone)
+
+                //junction deposit +1
+                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount))) // first +1
+                .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> lift(HI))
+                .forward(forwardPole-1)
+
+                .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0.16))
+                .waitSeconds(waittime)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
+
+                .back(forwardPole-1)
+                .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0))
+                //go to STACK for +2
+                .lineToLinearHeading(new Pose2d(forwardAmount, -23, Math.toRadians(-90)))
+
+                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> lift(130))
+                .forward(forwardCone)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0))
+                .addDisplacementMarker(() -> {lift(600);})
+                .back(forwardCone)
+
+                //deposit +2 on junction // NOTE: THIS IS DIFFERENT TO GET INTO POSITION FOR PARKING
+                .lineToLinearHeading(new Pose2d(forwardAmount-2, 13.7, Math.toRadians(0)))
+                .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
+
+                .forward(10.2)
+                .UNSTABLE_addTemporalMarkerOffset(-.8, () -> polePusher.setPosition(0.16))
+                .waitSeconds(waittime)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
+                .back(10.2)
+                .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0))
 
                 .build();
 //VISION
@@ -242,6 +295,7 @@ public class AlternateRight3Cone extends LinearOpMode
             //drive.followTrajectory(visionShift);
             // cycling
             camera.closeCameraDevice();
+            sleep(1200);  // offset timing
             drive.followTrajectorySequence(cycle);
 
 
