@@ -28,7 +28,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
 
     public static final int LOW = 1000; //low value here
     public static final int MED = 1630; //med value
-    public static final int HI = 2220; //hi value
+    public static final int HI = 2000;//2220; //hi value
     public static final int GRD = 000; //ground value
 
     public static final int cone2 = 110; //2 cone stack
