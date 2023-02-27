@@ -26,9 +26,9 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
     public Encoder parallelEncoder, perpendicularEncoder;
     static final double[] speed = {1.0, 0.15};
 
-    public static final int LOW = 1000; //low value here
-    public static final int MED = 1630; //med value
-    public static final int HI = 2000;//2220; //hi value
+    public static final int LOW = 910; //low value here
+    public static final int MED = 1550; //med value
+    public static final int HI = 2170;//2220; //hi value
     public static final int GRD = 000; //ground value
 
     public static final int cone2 = 110; //2 cone stack
@@ -217,28 +217,28 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
             //telemetry.addData("Perpendicular", perpendicularEncoder.getCurrentPosition());
             //telemetry.update();
 
-            while (gamepad1.b) {
-                frontLeftMotor.setPower(speed[speedPointer]);
-                telemetry.addData("front left position : ", frontLeftMotor.getCurrentPosition());
-            }
-            while (gamepad1.x) {
-                backLeftMotor.setPower(speed[speedPointer]);
-                telemetry.addData("back left position : ", backLeftMotor.getCurrentPosition());
-            }
-            while (gamepad1.a) {
-                frontRightMotor.setPower(speed[speedPointer]);
-                telemetry.addData("front right position : ", frontRightMotor.getCurrentPosition());
-            }
-            while (gamepad1.y) {
-                backRightMotor.setPower(speed[speedPointer]);
-                telemetry.addData("back right position : ", backRightMotor.getCurrentPosition());
-            }
-            telemetry.addData("frontLeft: ", frontLeftMotor.getCurrentPosition());
-            telemetry.addData("backLeft: ", backLeftMotor.getCurrentPosition());
-            telemetry.addData("frontRight: ", frontRightMotor.getCurrentPosition());
-            telemetry.addData("backRight: ", backRightMotor.getCurrentPosition());
-
-            telemetry.update();
+//            while (gamepad1.b) {
+//                frontLeftMotor.setPower(speed[speedPointer]);
+//                telemetry.addData("front left position : ", frontLeftMotor.getCurrentPosition());
+//            }
+//            while (gamepad1.x) {
+//                backLeftMotor.setPower(speed[speedPointer]);
+//                telemetry.addData("back left position : ", backLeftMotor.getCurrentPosition());
+//            }
+//            while (gamepad1.a) {
+//                frontRightMotor.setPower(speed[speedPointer]);
+//                telemetry.addData("front right position : ", frontRightMotor.getCurrentPosition());
+//            }
+//            while (gamepad1.y) {
+//                backRightMotor.setPower(speed[speedPointer]);
+//                telemetry.addData("back right position : ", backRightMotor.getCurrentPosition());
+//            }
+//            telemetry.addData("frontLeft: ", frontLeftMotor.getCurrentPosition());
+//            telemetry.addData("backLeft: ", backLeftMotor.getCurrentPosition());
+//            telemetry.addData("frontRight: ", frontRightMotor.getCurrentPosition());
+//            telemetry.addData("backRight: ", backRightMotor.getCurrentPosition());
+//
+//            telemetry.update();
 
         }
     }
