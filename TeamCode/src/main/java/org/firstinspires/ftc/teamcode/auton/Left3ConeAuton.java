@@ -72,7 +72,7 @@ public class Left3ConeAuton extends LinearOpMode
         double forwardAmount = 50;
         double forwardPole = 13.8;
         double forwardCone = 5.4;
-        double turnAmount = -43.5;
+        double turnAmount = -41;
         double waittime = 0.1;
         TrajectorySequence cycle = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
                 .strafeRight(1.5)
@@ -143,7 +143,7 @@ public class Left3ConeAuton extends LinearOpMode
                 .back(forwardCone)
 
                 //deposit +2 on junction // NOTE: THIS IS DIFFERENT TO GET INTO POSITION FOR PARKING
-                .lineToLinearHeading(new Pose2d(forwardAmount-1.5, -12.2, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(forwardAmount-1.5, -10, Math.toRadians(0)))
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
 
                 .forward(10.2)
