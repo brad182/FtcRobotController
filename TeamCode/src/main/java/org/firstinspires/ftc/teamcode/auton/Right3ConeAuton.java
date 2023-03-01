@@ -73,10 +73,12 @@ public class Right3ConeAuton extends LinearOpMode
         double forwardPole = 13.8;
         double forwardCone = 5.4;
         double turnAmount = 59;
-        double waittime = 0.2;
+        double waittime = 0.1;
         TrajectorySequence cycle = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
                 .forward(52)
-                .lineToLinearHeading(new Pose2d(forwardAmount, 0, Math.toRadians(turnAmount)))
+                .lineToLinearHeading(new Pose2d(forwardAmount+1, 0, 0))
+                .back(1)
+                .turn(Math.toRadians(turnAmount))
                 // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> polePusher.setPosition(0.15))
 
