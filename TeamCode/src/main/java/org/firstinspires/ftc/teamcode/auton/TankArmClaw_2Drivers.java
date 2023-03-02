@@ -26,7 +26,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
     public Encoder parallelEncoder, perpendicularEncoder;
     static final double[] speed = {1.0, 0.15};
 
-    public static final int LOW = 1030; //low value here
+    public static final int LOW = 1000; //1030 //low value here
     public static final int MED = 1610; //med value
     public static final int HI = 2220;//2170; //hi value
     public static final int GRD = 000; //ground value
