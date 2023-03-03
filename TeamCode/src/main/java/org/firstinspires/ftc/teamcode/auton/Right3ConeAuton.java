@@ -71,12 +71,12 @@ public class Right3ConeAuton extends LinearOpMode
         //    Pose2d startPose = new Pose2d(0, 0, Math.toRadians(-90)); OH THATS WHY IT WASN"T WORKING I WASN'T USING startPose!!!! AHA but I don't need it anymore so I'm commenting it out to avoid confusion
         double forwardAmount = 50;
         double forwardPole = 13.8;
-        double forwardCone = 5.4;
-        double turnAmount = 59;
+        double forwardCone = 6.5;
+        double turnAmount = 54.5;
         double waittime = 0.1;
         TrajectorySequence cycle = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
                 .forward(52)
-                .lineToLinearHeading(new Pose2d(forwardAmount+1, 0, 0))
+                .lineToLinearHeading(new Pose2d(forwardAmount+2, 0, 0))
                 .back(1)
                 .turn(Math.toRadians(turnAmount))
                 // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
@@ -94,7 +94,7 @@ public class Right3ConeAuton extends LinearOpMode
                 .back(forwardPole-3.3)
                 .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0))
                 //go to get stack for +1
-                .lineToLinearHeading(new Pose2d(forwardAmount, -24, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(forwardAmount, -23, Math.toRadians(-90)))
 //lift doesnt go up on cycle 1, cycle 2 too far forward
 //                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
 //                .UNSTABLE_addTemporalMarkerOffset(-1, () -> lift(150))
@@ -132,7 +132,7 @@ public class Right3ConeAuton extends LinearOpMode
                 .back(forwardPole+4)
                 .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0))
                 //go to STACK for +2
-                .lineToLinearHeading(new Pose2d(forwardAmount+4, -25, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(forwardAmount+2, -25, Math.toRadians(-90)))
 
                 .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> lift(130))
@@ -142,21 +142,21 @@ public class Right3ConeAuton extends LinearOpMode
                 .back(forwardCone)
 
                 //deposit +2 on junction // NOTE: THIS IS DIFFERENT TO GET INTO POSITION FOR PARKING
-                .lineToLinearHeading(new Pose2d(forwardAmount+7, 8.5, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(forwardAmount+5, 7, Math.toRadians(0))) //6.5
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
 
-                .forward(10)
+                .forward(9)
                 .UNSTABLE_addTemporalMarkerOffset(-.8, () -> polePusher.setPosition(0.16))
                 .waitSeconds(waittime)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
-                .back(10)
+                .back(9)
                 .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0))
 
                 .build();
 //VISION
         TrajectorySequence oneDotLeft = drive.trajectorySequenceBuilder(cycle.end())
-                .lineToLinearHeading(new Pose2d(forwardAmount+6, 24, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(forwardAmount+10, 17, Math.toRadians(-90)))
                 .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
                 .build();
 
@@ -167,7 +167,7 @@ public class Right3ConeAuton extends LinearOpMode
 
         TrajectorySequence threeDotRight = drive.trajectorySequenceBuilder(cycle.end())
 
-                .lineToLinearHeading(new Pose2d(forwardAmount, -26, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(forwardAmount+3, -26, Math.toRadians(-90)))
                 .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> lift(00))
                 .build();
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");
