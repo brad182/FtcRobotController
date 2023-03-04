@@ -72,19 +72,19 @@ public class Left3ConeAuton extends LinearOpMode
         double forwardAmount = 50;
         double forwardPole = 13.8;
         double forwardCone = 5.4;
-        double turnAmount = -44.5;
+        double turnAmount = -44;
         double waittime = 0.1;
         TrajectorySequence cycle = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
                 .strafeRight(1.5)
                 .forward(52)
-
+                .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> lift(HI))
                 .lineToLinearHeading(new Pose2d(forwardAmount+1, 0, 0))
                 .back(1)
                 .turn(Math.toRadians(turnAmount-1.25))  // more negative to turn right more
                   // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> polePusher.setPosition(0.17))
 
-                .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> lift(HI))
+
                 .forward(forwardPole-1.2)
 
                 .waitSeconds(waittime)
@@ -147,10 +147,10 @@ public class Left3ConeAuton extends LinearOpMode
                 .back(forwardCone)
 
                 //junction deposit +2 on junction // NOTE: THIS IS DIFFERENT TO GET INTO POSITION FOR PARKING
-                .lineToLinearHeading(new Pose2d(forwardAmount-0.25, -11, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(forwardAmount-0.25, -11.5, Math.toRadians(0)))
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
 
-                .forward(9)
+                .forward(8)
                 .UNSTABLE_addTemporalMarkerOffset(-.8, () -> polePusher.setPosition(0.17))
                 .waitSeconds(waittime)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
@@ -173,7 +173,7 @@ public class Left3ConeAuton extends LinearOpMode
 
         TrajectorySequence threeDotRight = drive.trajectorySequenceBuilder(cycle.end())
 
-                .lineToLinearHeading(new Pose2d(forwardAmount, -22, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(forwardAmount, -24, Math.toRadians(90)))
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(00))
                 .build();
         leftLiftMotor = hardwareMap.get(DcMotor.class, "leftLiftMotor");

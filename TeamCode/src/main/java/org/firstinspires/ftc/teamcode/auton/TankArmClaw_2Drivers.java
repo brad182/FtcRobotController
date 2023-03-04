@@ -26,7 +26,7 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
     public Encoder parallelEncoder, perpendicularEncoder;
     static final double[] speed = {1.0, 0.15};
 
-    public static final int LOW = 1000; //1030 //low value here
+    public static final int LOW = 980; //1030 //low value here
     public static final int MED = 1610; //med value
     public static final int HI = 2220;//2170; //hi value
     public static final int GRD = 000; //ground value
@@ -174,10 +174,10 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
 
 //retract polepusher when lift is lowered
             if (rightLiftMotor.getCurrentPosition() > LOW+10){
-                pushPosition = 0.15;
+                pushPosition = 0.18;
             }
             if (rightLiftMotor.getCurrentPosition() > MED+10){
-                pushPosition = 0.12;
+                pushPosition = 0.14;
             }
             if (rightLiftMotor.getCurrentPosition() < LOW - 10){
                 pushPosition = 0;
