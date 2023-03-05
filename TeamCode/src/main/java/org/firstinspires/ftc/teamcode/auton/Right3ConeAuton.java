@@ -30,7 +30,7 @@ public class Right3ConeAuton extends LinearOpMode
     public Servo parallelEncoderLift = null;
     static int[] clawToggle = {0, 1};
     public Servo polePusher = null;
-    public static final int HI = 2695; //hi value
+    public static final int HI =  2500; //hi value 2570
     public static final int GR = 00; //ground value
 
     int clawSwitch = 1;
@@ -72,16 +72,17 @@ public class Right3ConeAuton extends LinearOpMode
         double forwardAmount = 50;
         double forwardPole = 11;//11.5
         double forwardCone = 7.7;
-        double turnAmount = 52;//52.5
+        double turnAmount = 45;//52
         double waittime = 0.09;
         TrajectorySequence cycle = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
                 .forward(52)
-                .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> lift(HI))
-                .lineToLinearHeading(new Pose2d(53, 0, 0))//forwardAmount+2 idk why no worky
-                .back(1)
-                .turn(Math.toRadians(turnAmount))
+
+                .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(turnAmount)))//forwardAmount+2 idk why no worky
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> lift(HI))
+                //.back(1)
+                //.turn(Math.toRadians(turnAmount))
                 // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> polePusher.setPosition(0.11))
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> polePusher.setPosition(0.18))
 
 
                 .forward(forwardPole-3) //to push signal out of the way
@@ -121,11 +122,11 @@ public class Right3ConeAuton extends LinearOpMode
                 .back(forwardCone)
 
                 //junction deposit +1
-                .lineToLinearHeading(new Pose2d(forwardAmount-1.2, -4.5, Math.toRadians(turnAmount+1))) //-5.2
+                .lineToLinearHeading(new Pose2d(forwardAmount-1.2, -4.5, Math.toRadians(turnAmount+5))) //-5.2
                 .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> lift(HI))
                 .forward(forwardPole+4.5)
 
-                .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0.11))
+                .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0.18))
                 .waitSeconds(waittime)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
@@ -143,15 +144,15 @@ public class Right3ConeAuton extends LinearOpMode
                 .back(forwardCone)
 
                 //deposit +2 on junction // NOTE: THIS IS DIFFERENT TO GET INTO POSITION FOR PARKING
-                .lineToLinearHeading(new Pose2d(forwardAmount-2, 13.75, Math.toRadians(0))) //11.75, 10.5; updated y 14
+                .lineToLinearHeading(new Pose2d(forwardAmount-2, 12, Math.toRadians(0))) //11.75, 10.5; updated y 14
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
 
-                .forward(9.5)
-                .UNSTABLE_addTemporalMarkerOffset(-.8, () -> polePusher.setPosition(0.12))
+                .forward(9)
+                .UNSTABLE_addTemporalMarkerOffset(-.8, () -> polePusher.setPosition(0.2))
                 .waitSeconds(waittime)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> lift(HI-100))
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> clawMotor.setPosition(0.5))
-                .back(8)
+                .back(9)
                 .UNSTABLE_addTemporalMarkerOffset(-.5, () -> polePusher.setPosition(0))
 
                 .build();
