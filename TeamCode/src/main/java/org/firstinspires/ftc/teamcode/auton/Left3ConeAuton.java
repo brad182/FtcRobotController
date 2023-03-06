@@ -70,9 +70,9 @@ public class Left3ConeAuton extends LinearOpMode
 
         //    Pose2d startPose = new Pose2d(0, 0, Math.toRadians(-90)); OH THATS WHY IT WASN"T WORKING I WASN'T USING startPose!!!! AHA but I don't need it anymore so I'm commenting it out to avoid confusion
         double forwardAmount = 50;
-        double forwardPole = 13.8;
+        double forwardPole = 13.5;
         double forwardCone = 6;
-        double turnAmount = -44;
+        double turnAmount = -45;
         double waittime = 0.1;
         TrajectorySequence cycle = drive.trajectorySequenceBuilder(new Pose2d())  // drive forward to pole
                 .strafeRight(1.5)
@@ -82,7 +82,7 @@ public class Left3ConeAuton extends LinearOpMode
                 .back(2)
                 .turn(Math.toRadians(turnAmount-1.25))  // more negative to turn right more
                   // Preload //// IMPORTANT: x and y are switched, y is negative (in relation to a coordinate plane)
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> polePusher.setPosition(0.19))
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> polePusher.setPosition(0.18))
 
 
                 .forward(forwardPole-1.2)
@@ -122,7 +122,8 @@ public class Left3ConeAuton extends LinearOpMode
                 .back(forwardCone)
 
                 //junction deposit +1
-                .lineToLinearHeading(new Pose2d(forwardAmount, -1, Math.toRadians(turnAmount+1))) // first +1
+                .lineToLinearHeading(new Pose2d(forwardAmount, -1, Math.toRadians(90)))//Math.toRadians(turnAmount+1))) // first +1
+                .turn(Math.toRadians(turnAmount-90))
                 .UNSTABLE_addTemporalMarkerOffset(-1.8, () -> lift(HI))
                 .forward(forwardPole-0.7)
 
@@ -147,7 +148,7 @@ public class Left3ConeAuton extends LinearOpMode
                 .back(forwardCone)
 
                 //junction deposit +2 on junction // NOTE: THIS IS DIFFERENT TO GET INTO POSITION FOR PARKING
-                .lineToLinearHeading(new Pose2d(forwardAmount-0.25, -12.5, Math.toRadians(0)))//11.5
+                .lineToLinearHeading(new Pose2d(forwardAmount-0.25, -14, Math.toRadians(0)))//11.5
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> lift(HI))
 
                 .forward(8)
