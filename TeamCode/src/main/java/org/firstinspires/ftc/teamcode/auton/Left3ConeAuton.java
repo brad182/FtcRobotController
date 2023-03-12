@@ -18,7 +18,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "Left3ConeAuton", group = "roadrunner")
+@Autonomous(name = "Left3ConeAuton", group = "roadrunner") //@Autonomous(name = "Left3ConeAuton", group = "roadrunner", preselectTeleOp="TankArmClaw_2Drivers.java") USE NEXT SEASON
 public class Left3ConeAuton extends LinearOpMode
 {
     ElapsedTime time=new ElapsedTime();
