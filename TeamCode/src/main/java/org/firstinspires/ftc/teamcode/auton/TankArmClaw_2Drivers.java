@@ -191,8 +191,8 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
             polePusher.setPosition(pushPosition);
 
             //claw
-            if (gamepad2.left_trigger >0){  //open
-                clawSwitch = 0.5;
+            if (gamepad2.left_trigger >0) {  //open
+                clawSwitch = 0.4;
                 polePusher.setPosition(0);
             }
             else if (gamepad2.left_bumper) { //close
