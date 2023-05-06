@@ -196,12 +196,14 @@ public class TankArmClaw_2Drivers extends LinearOpMode {
                 polePusher.setPosition(0);
             }
             else if (gamepad2.left_bumper) { //close
-                clawSwitch = 0.3;
+                clawSwitch = 0;
             }
 
-           // telemetry.addData("clawSwitch", clawSwitch);
             clawMotor.setPosition(clawSwitch);
 
+            telemetry.addData("clawSwitch", clawSwitch);
+            telemetry.addData("clawposition", clawMotor.getPosition());
+            telemetry.update();
             // slow mode
             if (gamepad1.left_bumper) {
                 speedPointer = (speedPointer + 1) % 2;
